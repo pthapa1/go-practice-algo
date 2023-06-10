@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	algo.ExecuteBinarySearchList()
+	algo.ExecuteTwoCrystalBalls()
 }

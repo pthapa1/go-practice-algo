@@ -29,7 +29,6 @@ func binarySearchList(haystack []int, needle int) bool {
 }
 
 func ExecuteBinarySearchList() {
-	// [1, 3, 4, 69, 71, 81, 90, 99, 420, 1337, 69420]
 	foo := []int{1, 3, 4, 69, 71, 81, 90, 99, 420, 1337, 69420}
 
 	result := binarySearchList(foo, 69)
