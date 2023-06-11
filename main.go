@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	algo.ExecuteTwoCrystalBalls()
+	algo.ExecuteBubbleSort()
 }
