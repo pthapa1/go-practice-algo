@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	algo.ExecuteBubbleSort()
+	algo.LinkedList()
 }
