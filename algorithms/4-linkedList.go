@@ -29,7 +29,7 @@ func (l linkedList) printLinkedListData() {
 		toPrint = toPrint.next          // go to the next one.
 		l.length--                      // decrease the length so that for loop (while loop in Js or Python) can actually end.
 	}
-	fmt.Println("\n")
+	fmt.Println()
 }
 
 // Delete value from the node of a given linkedlist
