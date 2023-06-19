@@ -48,7 +48,7 @@ func (l *linkedList) deleteNodeValue(value int) {
 		if toDelete.next.next == nil {
 			return // return if the value does not exists in linked list
 		}
-		toDelete = toDelete.next // once the value is found, assign the value to delete
+		toDelete = toDelete.next // keep moving forward
 	}
 	toDelete.next = toDelete.next.next // once the value is found, set the pointer to next node
 	l.length--                         // decrease the length once done.
@@ -65,7 +65,7 @@ func LinkedList() {
 	newLinkedList.prepend(node2)
 	newLinkedList.prepend(node3)
 	newLinkedList.prepend(node4)
-	fmt.Println(newLinkedList)          // Expected Result {memoryAddress numberOfitems}. {0x140000102b0 3} in my case
+	fmt.Println(newLinkedList)          // Expected Result {memoryAddress numberOfitems}. {0x140000102b0 4} in my case
 	newLinkedList.printLinkedListData() // Expected Result: 1, 2, 20, 200
 	newLinkedList.deleteNodeValue(1)    // delete function
 	newLinkedList.printLinkedListData() // Expected Result:1, 2, 20
