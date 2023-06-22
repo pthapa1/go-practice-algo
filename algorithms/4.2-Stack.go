@@ -36,10 +36,10 @@ func (stack *Stack[T]) pop() T {
 		var sampleValue T
 		return sampleValue
 	}
-
+	removedValue := stack.tail.data
 	stack.tail = stack.tail.next
 	stack.tail.next = nil
-	return stack.tail.data
+	return removedValue
 }
 
 func ExecuteStack() {
@@ -51,5 +51,7 @@ func ExecuteStack() {
 	newStack.push(78)
 	newStack.push(68)
 	tailValue := newStack.peek()
-	fmt.Println(tailValue) // Expected Value is the last one we added. 68 in this case
+	fmt.Println("Tail Value: ", tailValue) // Expected Value is the last one we added. 68 in this case
+	removedValue := newStack.pop()
+	fmt.Println("Removed Value: ", removedValue) // Expected Value is 68 as it is the tail
 }
