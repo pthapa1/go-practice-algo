@@ -7,28 +7,21 @@ import (
 )
 
 func two_cyrstal_balls(breaks []bool) int {
-
 	var jumpAmount = math.Floor(math.Sqrt(float64(len(breaks))))
-
 	i := int(jumpAmount)
-
 	for ; i < len(breaks); i = i + int(jumpAmount) {
 		if breaks[i] {
 			break
 		}
 	}
-
 	i = i - int(jumpAmount)
-
 	for j := 0; j < int(jumpAmount) && j < len(breaks); j++ {
 		i++
 		if breaks[i] {
 			return i
 		}
 	}
-
 	return -1
-
 }
 
 func ExecuteTwoCrystalBalls() {

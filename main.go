@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	algo.ExecuteQueue()
+	algo.ExecuteStack()
 }
