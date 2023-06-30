@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	algo.ExecuteStack()
+	algo.ExecuteRecursion()
 }
