@@ -9,7 +9,6 @@ type node struct {
 }
 
 // create a linkedList to connect node. You need head.
-
 type linkedList struct {
 	head   *node
 	length int
