@@ -30,8 +30,8 @@ func quickSort(arr []int, low int, high int) {
 	}
 }
 
-func ExecuteQuickSort() {
-	arr := [6]int{8, 7, 0, 2, 13, 78}
+func ExecuteQuickSort(arr []int) {
+	// arr := [6]int{8, 7, 0, 2, 13, 78}
 	quickSort(arr[:], 0, len(arr)-1)
 	fmt.Println(arr)
 }
