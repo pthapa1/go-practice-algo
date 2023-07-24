@@ -2,11 +2,10 @@
 package algo
 
 import (
-	"fmt"
 	"math"
 )
 
-func binarySearchList(haystack []int, needle int) bool {
+func BinarySearch(haystack []int, needle int) bool {
 	startingIndex := 0
 	endingIndex := len(haystack) - 1
 
@@ -26,11 +25,4 @@ func binarySearchList(haystack []int, needle int) bool {
 		}
 	}
 	return false
-}
-
-func ExecuteBinarySearchList() {
-	foo := []int{1, 3, 4, 69, 71, 81, 90, 99, 420, 1337, 69420}
-
-	result := binarySearchList(foo, 69)
-	fmt.Println(result)
 }

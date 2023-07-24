@@ -2,7 +2,7 @@ package algo
 
 import "fmt"
 
-func bubbleSortWithPointer(arr []int) {
+func BubbleSortWithPointer(arr []int) {
 
 	distanceToTravel := len(arr)
 
@@ -20,7 +20,7 @@ func bubbleSortWithPointer(arr []int) {
 		pointer2 += 1
 
 		if pointer2 == distanceToTravel {
-			// one the pointer reach the end. Reduce the distance to travel.
+			// once the pointer reach the end. Reduce the distance to travel.
 			distanceToTravel -= 1
 			// then, reset the loop.
 			pointer1 = 0
