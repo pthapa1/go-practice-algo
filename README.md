@@ -5,3 +5,6 @@ Solving most popular Data Structure and Algorithms using go. This repo also cont
 ## Construction Work 🚧👷‍♀️⛑️
 
 Please visit back
+
+##
+- Run tests with `go test ./tests/`
