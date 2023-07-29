@@ -2,11 +2,12 @@ package algo
 
 import (
 	"bytes"
-	"github.com/pthapa1/go-practice-algo/algorithms"
 	"log"
 	"os"
 	"reflect"
 	"testing"
+
+	algo "github.com/pthapa1/go-practice-algo/algorithms"
 )
 
 func captureOutput(f func()) string {
@@ -44,6 +45,20 @@ func TestLinkedList(t *testing.T) {
 	result := singleLinkedList.DeleteNode(2)
 	if result.Data != "Deleted node with value 2" {
 		t.Errorf(" Expected: Deleted node with value 2, Got: %v, Error: %v", result.Data, result.Error)
+	}
+
+	// non existant node.
+	nonExistNodeResult := singleLinkedList.DeleteNode(10)
+	if nonExistNodeResult.Data != nil || nonExistNodeResult.Error == nil {
+		t.Errorf("Expected: {Data: %v, Error: %v} but Got:  {Data: %v, Error: %v}", nil,
+			"Cannot delete Node since value does not exist in this SLL", nonExistNodeResult.Data, nonExistNodeResult.Error)
+	}
+	//node with length 0
+	sll := algo.SinglyLinkedList[int]{}
+
+	emptySLL := sll.DeleteNode(1)
+	if emptySLL.Data != nil || emptySLL.Error == nil {
+		t.Errorf("Expected Linked List to be empty but it is not.")
 	}
 
 }
