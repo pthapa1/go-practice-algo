@@ -29,7 +29,7 @@ func (q *queue[T]) dequeue() (T, error) {
 	// when the queue is empty.
 	if q.length == 0 {
 		var nope T
-		return nope, fmt.Errorf("Queue is Empty")
+		return nope, fmt.Errorf("queue is Empty")
 	}
 	removedValue := q.head.data
 
