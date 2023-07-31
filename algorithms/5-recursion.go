@@ -1,3 +1,4 @@
+// maze solving algorithm with recursion
 package algo
 
 /*
@@ -7,12 +8,6 @@ package algo
 '##S##########'
 ]
 */
-
-//Recursion: You do some task until you hit the base case, when you do, you stop.
-// you need seen array that matches exactly the length of the original array
-// you need 4 direction. Because, Each point should walk on 4 direction.
-// Once you walk on any direction, mark the "seen" array as seen. You don't go there again.
-//
 
 type Point struct {
 	x int
@@ -64,6 +59,10 @@ func walk(maze []string, wall string, curr Point, seen [][]bool, end Point, path
 func MazeSover(maze []string, wall string, start Point, end Point) []Point {
 
 	seen := make([][]bool, len(maze))
+	for i := range seen {
+		seen[i] = make([]bool, len(maze[0]))
+	}
+
 	var path []Point
 	walk(maze, wall, start, seen, end, &path)
 	return path
