@@ -1,24 +1,11 @@
 package algo
 
 import (
-	"bytes"
-	"log"
-	"os"
 	"reflect"
 	"testing"
 
 	algo "github.com/pthapa1/go-practice-algo/algorithms"
 )
-
-func captureOutput(f func()) string {
-	var buf bytes.Buffer
-	log.SetOutput(&buf)
-	f()
-	log.SetOutput(os.Stderr)
-	// fmt.Println(buf.String())
-	return buf.String()
-
-}
 
 func TestLinkedList(t *testing.T) {
 

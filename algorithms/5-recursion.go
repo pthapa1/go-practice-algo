@@ -1,17 +1,11 @@
 // maze solving algorithm with recursion
 package algo
 
-/*
-[
-'##########E##',
-'#           #',
-'##S##########'
-]
-*/
+// import "fmt"
 
 type Point struct {
-	x int
-	y int
+	X int
+	Y int
 }
 
 var direction = [4][2]int{
@@ -22,42 +16,40 @@ var direction = [4][2]int{
 }
 
 func walk(maze []string, wall string, curr Point, seen [][]bool, end Point, path *[]Point) bool {
-	// if it is a wall.
-	if string(maze[curr.y][curr.x]) == wall {
+	// if the current point is off the map.
+	if curr.Y < 0 || curr.X < 0 || curr.Y >= len(maze) || curr.X >= len(maze[curr.Y]) {
 		return false
 	}
-	// if the current point is off the map.
-	if curr.y < 0 || curr.x < 0 || curr.y >= len(maze) || curr.x >= len(maze[curr.y]) {
+	// if it is a wall.
+	if string(maze[curr.Y][curr.X]) == wall {
 		return false
 	}
 	// if we have seen it.
-	if seen[curr.y][curr.x] {
+	if seen[curr.Y][curr.X] {
 		return false
 	}
-	// return true, when it's the end.
-	if curr.x == end.x && curr.y == end.y {
+	// return true when it's the end.
+	if curr.X == end.X && curr.Y == end.Y {
 		*path = append(*path, end)
 		return true
 	}
 
-	seen[curr.y][curr.x] = true
-	*path = append(*path, curr)
+	seen[curr.Y][curr.X] = true
 
 	for i := 0; i < len(direction); i++ {
 		x := direction[i][0]
 		y := direction[i][1]
 
-		if walk(maze, wall, Point{x: curr.x + x, y: curr.y + y}, seen, end, path) {
+		if walk(maze, wall, Point{X: curr.X + x, Y: curr.Y + y}, seen, end, path) {
 			*path = append(*path, curr)
 			return true
 		}
 	}
-	*path = (*path)[:len(*path)-1]
+
 	return false
 }
 
-func MazeSover(maze []string, wall string, start Point, end Point) []Point {
-
+func MazeSolver(maze []string, wall string, start Point, end Point) []Point {
 	seen := make([][]bool, len(maze))
 	for i := range seen {
 		seen[i] = make([]bool, len(maze[0]))
@@ -65,5 +57,9 @@ func MazeSover(maze []string, wall string, start Point, end Point) []Point {
 
 	var path []Point
 	walk(maze, wall, start, seen, end, &path)
+	// The path will be in reverse order, so we need to reverse it before returning.
+	for i, j := 0, len(path)-1; i < j; i, j = i+1, j-1 {
+		path[i], path[j] = path[j], path[i]
+	}
 	return path
 }
