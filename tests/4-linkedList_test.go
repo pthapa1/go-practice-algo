@@ -15,7 +15,7 @@ func TestLinkedList(t *testing.T) {
 	node4 := algo.Node[int]{Data: 2}
 	node5 := algo.Node[int]{Data: 33}
 
-	singleLinkedList := algo.SinglyLinkedList[int]{}
+	singleLinkedList := algo.LinkedList[int]{}
 	singleLinkedList.Prepend(node1)
 	singleLinkedList.Prepend(node2)
 	singleLinkedList.Prepend(node3)
@@ -41,7 +41,7 @@ func TestLinkedList(t *testing.T) {
 			"Cannot delete Node since value does not exist in this SLL", nonExistNodeResult.Data, nonExistNodeResult.Error)
 	}
 	//node with length 0
-	sll := algo.SinglyLinkedList[int]{}
+	sll := algo.LinkedList[int]{}
 
 	emptySLL := sll.DeleteNode(1)
 	if emptySLL.Data != nil || emptySLL.Error == nil {

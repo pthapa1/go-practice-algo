@@ -15,13 +15,13 @@ type Node[T any] struct {
 	Next *Node[T]
 }
 
-type SinglyLinkedList[T any] struct {
+type LinkedList[T any] struct {
 	head   *Node[T]
 	length int
 }
 
 // Add new node on the head of linked list. Contant Time O(1)
-func (l *SinglyLinkedList[T]) Prepend(n Node[T]) {
+func (l *LinkedList[T]) Prepend(n Node[T]) {
 	oldHead := l.head // save current head as old head
 	l.head = &n       // make n our new head.
 	n.Next = oldHead  // and point it to our old head
@@ -29,7 +29,7 @@ func (l *SinglyLinkedList[T]) Prepend(n Node[T]) {
 }
 
 // Print all data associated with Singly Linked List
-func (l *SinglyLinkedList[T]) PrintAllSLLData() []T {
+func (l *LinkedList[T]) PrintAllSLLData() []T {
 	toPrint := l.head
 	nodeValueInlist := []T{}
 	for toPrint != nil {
@@ -45,7 +45,7 @@ func (l *SinglyLinkedList[T]) PrintAllSLLData() []T {
 }
 
 // delete a node given it's value.
-func (l *SinglyLinkedList[T]) DeleteNode(value T) ReturnType[T] {
+func (l *LinkedList[T]) DeleteNode(value T) ReturnType[T] {
 
 	if l.length == 0 {
 		return ReturnType[T]{Data: nil, Error: fmt.Errorf("list is empty, nothing to delete")}
