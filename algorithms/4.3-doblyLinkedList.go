@@ -22,6 +22,9 @@ func (d *DoblyLinkedList[T]) Prepend(n DLLNode[T]) {
 	d.Head = &n
 	n.Next = oldHead
 	n.Previous = nil
+	if oldHead != nil {
+		oldHead.Previous = d.Head
+	}
 	d.Length++
 }
 
