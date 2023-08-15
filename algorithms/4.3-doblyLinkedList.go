@@ -45,31 +45,36 @@ func (d *DoblyLinkedList[T]) PrintAllDllData() []T {
 	return dllValueList
 }
 
-// Delete a node:
-
+// Delete a node given the node value:
 func (d *DoblyLinkedList[T]) DeleteDLLNode(value T) ReturnType[T] {
-	// empty length
+	// nothing to delete if the dll is empty.
 	if d.Length == 0 {
 		return ReturnType[T]{Data: nil, Error: fmt.Errorf("list is empty. nothing to delete")}
 	}
-
+	// if the value we are deleting is in the head.
 	if reflect.DeepEqual(d.Head.Data, value) {
 		d.Head = d.Head.Next
+		if d.Head != nil { // Check if the list is now empty
+			d.Head.Previous = nil
+		}
 		d.Length--
-		return ReturnType[T]{Data: d.Head.Data, Error: nil}
+		return ReturnType[T]{Data: d.Head.Data, Error: nil} // Ensure this return value is logical for your use-case
 	}
 
 	toDelete := d.Head
 	for !reflect.DeepEqual(toDelete.Next.Data, value) {
-		// if the value does not exists
+		// if the value does not exist
 		if toDelete.Next.Next == nil {
-			return ReturnType[T]{Data: nil, Error: fmt.Errorf("cannot perform delete operation since the %v does not exists on node", value)}
+			return ReturnType[T]{Data: nil, Error: fmt.Errorf("cannot perform delete operation since the %v does not exist in the list", value)}
 		}
 		toDelete = toDelete.Next
 	}
-	newPrevious := toDelete
-	toDelete.Next = toDelete.Next.Next
-	toDelete.Next.Next.Previous = newPrevious
+
+	newNext := toDelete.Next.Next
+	if newNext != nil {
+		newNext.Previous = toDelete
+	}
+	toDelete.Next = newNext
 	d.Length--
-	return ReturnType[T]{Data: fmt.Sprintf("Deleted Node with Value %v: ", value)}
+	return ReturnType[T]{Data: d.Head.Data, Error: nil}
 }
