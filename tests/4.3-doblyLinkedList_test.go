@@ -66,3 +66,19 @@ func TestDeleteDLLNode(t *testing.T) {
 		t.Fatal("expected an error, got nil")
 	}
 }
+
+func TestGetlength(t *testing.T) {
+	list := algo.DoblyLinkedList[int]{}
+	length := list.GetLength()
+	if length != 0 {
+		t.Fatalf("expected length to be 0 but got %v", length)
+	}
+	list.Prepend(algo.DLLNode[int]{Data: 1})
+	list.Prepend(algo.DLLNode[int]{Data: 2})
+	list.Prepend(algo.DLLNode[int]{Data: 3})
+
+	newLength := list.GetLength()
+	if newLength != 3 {
+		t.Fatalf("expected length to be 3 but got %v", newLength)
+	}
+}

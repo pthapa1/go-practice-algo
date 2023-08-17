@@ -28,6 +28,11 @@ func (d *DoblyLinkedList[T]) Prepend(n DLLNode[T]) {
 	d.Length++
 }
 
+func (d *DoblyLinkedList[T]) GetLength() int {
+	length := d.Length
+	return length
+}
+
 // Read and print out all the items in the DLL.
 func (d *DoblyLinkedList[T]) PrintAllDllData() []T {
 
