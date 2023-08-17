@@ -36,7 +36,7 @@ func (d *DoblyLinkedList[T]) PrintAllDllData() []T {
 
 	for toPrint != nil {
 		data := toPrint.Data
-		fmt.Printf("%v =>", data)
+		fmt.Printf("%v <=> ", data)
 		dllValueList = append(dllValueList, data)
 		toPrint = toPrint.Next
 	}
@@ -58,18 +58,21 @@ func (d *DoblyLinkedList[T]) DeleteDLLNode(value T) ReturnType[T] {
 			d.Head.Previous = nil
 		}
 		d.Length--
-		return ReturnType[T]{Data: d.Head.Data, Error: nil} // Ensure this return value is logical for your use-case
+		return ReturnType[T]{Data: d.Head.Data, Error: nil}
 	}
 
 	toDelete := d.Head
-	for !reflect.DeepEqual(toDelete.Next.Data, value) {
-		// if the value does not exist
-		if toDelete.Next.Next == nil {
-			return ReturnType[T]{Data: nil, Error: fmt.Errorf("cannot perform delete operation since the %v does not exist in the list", value)}
-		}
+	for toDelete.Next != nil && !reflect.DeepEqual(toDelete.Next.Data, value) {
+		// move to the next node
 		toDelete = toDelete.Next
 	}
 
+	// if reached the end and didn't find the node
+	if toDelete.Next == nil {
+		return ReturnType[T]{Data: nil, Error: fmt.Errorf("cannot perform delete operation since the %v does not exist in the list", value)}
+	}
+
+	// now, toDelete.Next is the node we want to delete
 	newNext := toDelete.Next.Next
 	if newNext != nil {
 		newNext.Previous = toDelete
