@@ -7,7 +7,7 @@ import (
 )
 
 func TestDLLPrepend(t *testing.T) {
-	list := algo.DoblyLinkedList[int]{}
+	list := algo.DoublyLinkedList[int]{}
 	list.Prepend(algo.DLLNode[int]{Data: 1})
 
 	if list.Length != 1 {
@@ -31,7 +31,7 @@ func TestDLLPrepend(t *testing.T) {
 }
 
 func TestDeleteDLLNode(t *testing.T) {
-	list := algo.DoblyLinkedList[int]{}
+	list := algo.DoublyLinkedList[int]{}
 	list.Prepend(algo.DLLNode[int]{Data: 1})
 	list.Prepend(algo.DLLNode[int]{Data: 2})
 	list.Prepend(algo.DLLNode[int]{Data: 3})
@@ -68,7 +68,7 @@ func TestDeleteDLLNode(t *testing.T) {
 }
 
 func TestGetlength(t *testing.T) {
-	list := algo.DoblyLinkedList[int]{}
+	list := algo.DoublyLinkedList[int]{}
 	length := list.GetLength()
 	if length != 0 {
 		t.Fatalf("expected length to be 0 but got %v", length)

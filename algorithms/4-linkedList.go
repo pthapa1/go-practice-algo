@@ -44,7 +44,7 @@ func (l *LinkedList[T]) PrintAllSLLData() []T {
 
 }
 
-// delete a node given it's value.
+// Delete a node given it's value.
 func (l *LinkedList[T]) DeleteNode(value T) ReturnType[T] {
 
 	if l.length == 0 {

@@ -11,13 +11,13 @@ type DLLNode[T any] struct {
 	Previous *DLLNode[T]
 }
 
-type DoblyLinkedList[T any] struct {
+type DoublyLinkedList[T any] struct {
 	Head   *DLLNode[T]
 	Length int
 }
 
 // Add item to the head of the linked list. Constant Time O(1)
-func (d *DoblyLinkedList[T]) Prepend(n DLLNode[T]) {
+func (d *DoublyLinkedList[T]) Prepend(n DLLNode[T]) {
 	oldHead := d.Head
 	d.Head = &n
 	n.Next = oldHead
@@ -28,13 +28,13 @@ func (d *DoblyLinkedList[T]) Prepend(n DLLNode[T]) {
 	d.Length++
 }
 
-func (d *DoblyLinkedList[T]) GetLength() int {
+func (d *DoublyLinkedList[T]) GetLength() int {
 	length := d.Length
 	return length
 }
 
 // Read and print out all the items in the DLL.
-func (d *DoblyLinkedList[T]) PrintAllDllData() []T {
+func (d *DoublyLinkedList[T]) PrintAllDllData() []T {
 
 	toPrint := d.Head
 	dllValueList := []T{}
@@ -51,7 +51,7 @@ func (d *DoblyLinkedList[T]) PrintAllDllData() []T {
 }
 
 // Delete a node given the node value:
-func (d *DoblyLinkedList[T]) DeleteDLLNode(value T) ReturnType[T] {
+func (d *DoublyLinkedList[T]) DeleteDLLNode(value T) ReturnType[T] {
 	// nothing to delete if the dll is empty.
 	if d.Length == 0 {
 		return ReturnType[T]{Data: nil, Error: fmt.Errorf("list is empty. nothing to delete")}
@@ -85,4 +85,50 @@ func (d *DoblyLinkedList[T]) DeleteDLLNode(value T) ReturnType[T] {
 	toDelete.Next = newNext
 	d.Length--
 	return ReturnType[T]{Data: d.Head.Data, Error: nil}
+}
+
+func (d *DoublyLinkedList[T]) RemoveDLLNodeAt(removeAtLength int) ReturnType[T] {
+	if removeAtLength < 0 {
+		return ReturnType[T]{Data: nil, Error: fmt.Errorf("list length starts at 0")}
+	}
+
+	if d.Length <= removeAtLength {
+		return ReturnType[T]{Data: nil, Error: fmt.Errorf("list is not that long")}
+	}
+
+	if d.Head == nil {
+		return ReturnType[T]{Data: nil, Error: fmt.Errorf("list is empty")}
+	}
+
+	// Special case for removing head
+	if removeAtLength == 0 {
+		nodeToRemove := d.Head
+		d.Head = d.Head.Next
+		if d.Head != nil {
+			d.Head.Previous = nil
+		}
+		d.Length--
+		return ReturnType[T]{Data: nodeToRemove.Data, Error: nil}
+	}
+
+	currNode := d.Head
+	for i := 0; i < removeAtLength-1; i++ {
+		if currNode == nil {
+			return ReturnType[T]{Data: nil, Error: fmt.Errorf("unexpected error, node not found")}
+		}
+		currNode = currNode.Next
+	}
+
+	// Now currNode points to the node before the one to be removed.
+	nodeToRemove := currNode.Next
+	if nodeToRemove == nil {
+		return ReturnType[T]{Data: nil, Error: fmt.Errorf("unexpected error, node not found")}
+	}
+
+	currNode.Next = nodeToRemove.Next
+	if nodeToRemove.Next != nil {
+		nodeToRemove.Next.Previous = currNode
+	}
+	d.Length--
+	return ReturnType[T]{Data: nodeToRemove.Data, Error: nil}
 }
