@@ -9,7 +9,7 @@ type BinarySearchNode struct {
 }
 
 // insert node to the tree.
-func (n *BinarySearchNode) insertNodeBST(data int) *BinarySearchNode {
+func (n *BinarySearchNode) InsertNodeBST(data int) *BinarySearchNode {
 	// if the data we are adding is smaller than the node,
 	// 	we add it to the left if greater, we move it to right
 
@@ -30,7 +30,7 @@ func (n *BinarySearchNode) insertNodeBST(data int) *BinarySearchNode {
 		} else {
 			// if it's not empty,
 			// compare the data again with the right and left & repeat
-			n.Left.insertNodeBST(data)
+			n.Left.InsertNodeBST(data)
 		}
 
 	} else if data > n.Data {
@@ -39,7 +39,7 @@ func (n *BinarySearchNode) insertNodeBST(data int) *BinarySearchNode {
 		if n.Right == nil {
 			n.Right = &BinarySearchNode{Data: data}
 		} else {
-			n.Right.insertNodeBST(data)
+			n.Right.InsertNodeBST(data)
 		}
 
 	}
@@ -47,6 +47,7 @@ func (n *BinarySearchNode) insertNodeBST(data int) *BinarySearchNode {
 
 }
 
+// takes address of BST, and returns if the items exists or not
 func searchBinaryNode(tree *BinarySearchNode, item int) bool {
 	// Assuming
 	// the tree is balanced &
@@ -77,19 +78,27 @@ func searchBinaryNode(tree *BinarySearchNode, item int) bool {
 
 }
 
-func CreateBinarySearchTree() *BinarySearchNode {
-	listOfInt := []int{100, 60, 59, 19, 190}
+// create BST with a list of int
+func (n *BinarySearchNode) CreateBinarySearchTree(listOfInt []int) *BinarySearchNode {
 	var tree *BinarySearchNode
 
 	for _, item := range listOfInt {
-		tree = tree.insertNodeBST(item)
+		tree = tree.InsertNodeBST(item)
 	}
 	return tree
 }
 
-func SearchBinarySearchTree() bool {
-	addressOfTree := CreateBinarySearchTree()
-	trueOrFalse := searchBinaryNode(addressOfTree, 19)
+func (n *BinarySearchNode) SearchBinarySearchTree() bool {
+	var tree *BinarySearchNode
+	addressOfTree := tree.CreateBinarySearchTree([]int{100, 60, 59, 19, 190})
+	trueOrFalse := searchBinaryNode(addressOfTree, 60)
 	fmt.Println(trueOrFalse)
 	return trueOrFalse
 }
+
+/* example code
+func main() {
+	var tree *algo.BinarySearchNode
+	tree.SearchBinarySearchTree()
+}
+*/
