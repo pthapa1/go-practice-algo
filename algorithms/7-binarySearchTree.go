@@ -1,7 +1,5 @@
 package algo
 
-import "fmt"
-
 type BinarySearchNode struct {
 	Data  int
 	Left  *BinarySearchNode
@@ -48,7 +46,7 @@ func (n *BinarySearchNode) InsertNodeBST(data int) *BinarySearchNode {
 }
 
 // takes address of BST, and returns if the items exists or not
-func searchBinaryNode(tree *BinarySearchNode, item int) bool {
+func SearchBinaryNode(tree *BinarySearchNode, item int) bool {
 	// Assuming
 	// the tree is balanced &
 	// the tree is BST
@@ -66,14 +64,14 @@ func searchBinaryNode(tree *BinarySearchNode, item int) bool {
 		if tree.Left == nil {
 			return false
 		}
-		return searchBinaryNode(tree.Left, item)
+		return SearchBinaryNode(tree.Left, item)
 
 	} else {
 		// go to the right
 		if tree.Right == nil {
 			return false
 		}
-		return searchBinaryNode(tree.Right, item)
+		return SearchBinaryNode(tree.Right, item)
 	}
 
 }
@@ -87,18 +85,3 @@ func (n *BinarySearchNode) CreateBinarySearchTree(listOfInt []int) *BinarySearch
 	}
 	return tree
 }
-
-func (n *BinarySearchNode) SearchBinarySearchTree() bool {
-	var tree *BinarySearchNode
-	addressOfTree := tree.CreateBinarySearchTree([]int{100, 60, 59, 19, 190})
-	trueOrFalse := searchBinaryNode(addressOfTree, 60)
-	fmt.Println(trueOrFalse)
-	return trueOrFalse
-}
-
-/* example code
-func main() {
-	var tree *algo.BinarySearchNode
-	tree.SearchBinarySearchTree()
-}
-*/
