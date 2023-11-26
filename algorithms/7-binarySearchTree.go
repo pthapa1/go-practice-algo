@@ -11,7 +11,7 @@ func (n *BinarySearchNode) InsertNodeBST(data int) *BinarySearchNode {
 	// if the data we are adding is smaller than the node,
 	// 	we add it to the left if greater, we move it to right
 
-	// if the head is nil
+	// if the head is nil add data to the head
 	if n == nil {
 		n = &BinarySearchNode{Data: data}
 	}
