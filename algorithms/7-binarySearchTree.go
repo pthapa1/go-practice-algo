@@ -33,7 +33,6 @@ func (n *BinarySearchNode) InsertNodeBST(data int) *BinarySearchNode {
 
 	} else if data > n.Data {
 		// same as above but on the other side.
-
 		if n.Right == nil {
 			n.Right = &BinarySearchNode{Data: data}
 		} else {
