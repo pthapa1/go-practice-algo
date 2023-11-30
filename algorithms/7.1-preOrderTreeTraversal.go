@@ -1,4 +1,5 @@
 // general tree traversal
+// assuming that tree exists.
 
 package algo
 
@@ -15,17 +16,13 @@ func recurseTheTree(currentNode *Tree, path []int) []int {
 
 	path = append(path, currentNode.Data)
 
-	recurseTheTree(currentNode.Left, path)
-	recurseTheTree(currentNode.Right, path)
+	path = recurseTheTree(currentNode.Left, path)
+	path = recurseTheTree(currentNode.Right, path)
 
 	return path
-
 }
 
-// make a tree
-// search the tree.
-// write tests to prove that the it is working.
-// insert node to the tree
-// func (n *BinarySearchNode) InsertNodeInTree(data int) *Tree {
-//  return recurseTheTree(, path []int)
-// }
+func PreOrderSearch(head *Tree) []int {
+	newPath := []int{}
+	return recurseTheTree(head, newPath)
+}
