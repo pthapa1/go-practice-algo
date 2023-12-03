@@ -4,13 +4,13 @@ import (
 	"fmt"
 )
 
-type Tree struct {
+type Treemain struct {
 	Data  int
-	Right *Tree
-	Left  *Tree
+	Right *Treemain
+	Left  *Treemain
 }
 
-func recurseTheTree(currentNode *Tree, path []int) []int {
+func recurseTheTree(currentNode *Treemain, path []int) []int {
 	if currentNode == nil {
 		return path
 	}
@@ -22,46 +22,46 @@ func recurseTheTree(currentNode *Tree, path []int) []int {
 	return path
 }
 
-func searchTree(head *Tree) []int {
+func searchTree(head *Treemain) []int {
 	newPath := []int{}
 	result := recurseTheTree(head, newPath)
 	return result
 }
 
 func main() {
-	tree1 := &Tree{
+	tree1 := &Treemain{
 		Data: 20,
-		Right: &Tree{
+		Right: &Treemain{
 			Data: 50,
-			Right: &Tree{
+			Right: &Treemain{
 				Data:  100,
 				Right: nil,
 				Left:  nil,
 			},
-			Left: &Tree{
+			Left: &Treemain{
 				Data: 30,
-				Right: &Tree{
+				Right: &Treemain{
 					Data:  45,
 					Right: nil,
 					Left:  nil,
 				},
-				Left: &Tree{
+				Left: &Treemain{
 					Data:  29,
 					Right: nil,
 					Left:  nil,
 				},
 			},
 		},
-		Left: &Tree{
+		Left: &Treemain{
 			Data: 10,
-			Right: &Tree{
+			Right: &Treemain{
 				Data:  15,
 				Right: nil,
 				Left:  nil,
 			},
-			Left: &Tree{
+			Left: &Treemain{
 				Data: 5,
-				Right: &Tree{
+				Right: &Treemain{
 					Data:  7,
 					Right: nil,
 					Left:  nil,
@@ -70,6 +70,9 @@ func main() {
 			},
 		},
 	}
+	testSlice := []int{2, 4, 9, 19}
+
+	fmt.Println(testSlice[1:], "See the magic", len(testSlice), len(testSlice[1:]))
 
 	result := searchTree(tree1)
 	fmt.Println(result)
