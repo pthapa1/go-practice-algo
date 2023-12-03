@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Tree struct {
 	Data  int
@@ -13,15 +15,14 @@ func recurseTheTree(currentNode *Tree, path []int) []int {
 		return path
 	}
 
-	path = append(path, currentNode.Data)
-
 	path = recurseTheTree(currentNode.Left, path)
 	path = recurseTheTree(currentNode.Right, path)
+	path = append(path, currentNode.Data)
 
 	return path
 }
 
-func preOrderSearch(head *Tree) []int {
+func searchTree(head *Tree) []int {
 	newPath := []int{}
 	result := recurseTheTree(head, newPath)
 	return result
@@ -70,6 +71,6 @@ func main() {
 		},
 	}
 
-	result := preOrderSearch(tree1)
+	result := searchTree(tree1)
 	fmt.Println(result)
 }

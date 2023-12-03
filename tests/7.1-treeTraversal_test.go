@@ -105,7 +105,7 @@ func RandomTree2() *algo.Tree {
 func TestPreordertreeTraversal(t *testing.T) {
 	// the path returned by algo.preOrder should deep equal
 	// to the list below.
-	path1 := []int{
+	preOrderPath := []int{
 		20,
 		10,
 		5,
@@ -118,15 +118,40 @@ func TestPreordertreeTraversal(t *testing.T) {
 		100,
 	}
 
-	resultPath := algo.PreOrderSearch(RandomTree1())
+	resultPreOrderPath := algo.PreOrderSearch(RandomTree1())
 
-	if !reflect.DeepEqual(path1, resultPath) {
+	if !reflect.DeepEqual(preOrderPath, resultPreOrderPath) {
 		t.Errorf(
 			"Boy, you have an error on preorder search. Expected: %v but got: %v",
-			path1,
-			resultPath,
+			preOrderPath,
+			resultPreOrderPath,
+		)
+	}
+	// in order tree traversal tests
+	inOrderPath := []int{
+		5, 7, 10, 15, 20, 29, 30, 45, 50, 100,
+	}
+	inOrderResultPath := algo.InOrderSearch(RandomTree1())
+
+	if !reflect.DeepEqual(inOrderPath, inOrderResultPath) {
+		t.Errorf(
+			"Boy, you have an error on inorder search. Expected: %v but got: %v",
+			inOrderPath,
+			inOrderResultPath,
+		)
+	}
+
+	// post order tree traversal tests
+	postOrderPath := []int{
+		7, 5, 15, 10, 29, 45, 30, 100, 50, 20,
+	}
+
+	postOrderResult := algo.PostOrderSearch(RandomTree1())
+	if !reflect.DeepEqual(postOrderPath, postOrderResult) {
+		t.Errorf(
+			"Boy, you have an error on postOrderSearch. Expected %v bug got: %v",
+			postOrderPath,
+			postOrderResult,
 		)
 	}
 }
-
-// create tree and then pass this tree to tests
