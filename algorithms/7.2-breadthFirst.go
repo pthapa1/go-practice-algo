@@ -10,7 +10,7 @@ func BreadthFirstTreeTraversal(root *utils.Tree) []int {
 	}
 
 	result := []int{}
-	// create an slice that takes in nodes.
+	// create a slice that takes in nodes.
 	queue := []*utils.Tree{root}
 
 	for len(queue) > 0 {
@@ -31,7 +31,7 @@ func BreadthFirstTreeTraversal(root *utils.Tree) []int {
 }
 
 // there is not recursion in breadth first search
-// if you recurse within a node you are creating a stack and
+// if you recurse in a tree of nodes, you are creating a stack and
 // you are going in depth first.
 // So, here we create a queue slice and then we push and pop like we do
 // with a queue.
