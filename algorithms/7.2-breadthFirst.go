@@ -30,8 +30,10 @@ func BreadthFirstTreeTraversal(root *utils.Tree) []int {
 	return result
 }
 
-// there is not recursion in breadth first search
-// if you recurse in a tree of nodes, you are creating a stack and
-// you are going in depth first.
-// So, here we create a queue slice and then we push and pop like we do
-// with a queue.
+/*
+there is no recursion in breadth first search
+if you recurse in a tree of nodes, you create a stack
+you are going in depth first.
+So, here we create a queue slice and then we push and pop like we do
+with a queue.
+*/

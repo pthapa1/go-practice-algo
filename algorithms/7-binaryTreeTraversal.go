@@ -1,7 +1,8 @@
-// general tree traversals
+// general tree traversals,
+// this is depth first
 // perOerder
 // inOrder &
-// postOrder
+// postOrder search
 // assuming that tree exists.
 
 package algo
