@@ -1,6 +1,8 @@
 package algo
 
-import "github.com/pthapa1/go-practice-algo/utils"
+import (
+	"github.com/pthapa1/go-practice-algo/utils"
+)
 
 /*
 To find an item in a binary tree, in an efficient manner,
@@ -34,14 +36,5 @@ func FindItemDepthFirst(root *utils.Tree, data int) bool {
 		return true
 	}
 
-	if !answerFromTheLeft {
-		answerFromTheRight := FindItemDepthFirst(root.Right, data)
-		if answerFromTheRight {
-			return true
-		}
-	}
-
-	// if the item exist on the right side of the node.
-
-	return false
+	return FindItemDepthFirst(root.Right, data)
 }
