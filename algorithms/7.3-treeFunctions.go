@@ -29,7 +29,7 @@ func FindItemDepthFirst(root *utils.Tree, data int) bool {
 		return true
 	}
 
-	// search if the item item exist on the left side of the node.
+	// search if the item item exist on the left subtree
 	answerFromTheLeft := FindItemDepthFirst(root.Left, data)
 
 	if answerFromTheLeft {
@@ -37,4 +37,40 @@ func FindItemDepthFirst(root *utils.Tree, data int) bool {
 	}
 
 	return FindItemDepthFirst(root.Right, data)
+}
+
+func FindItemBreadthFirst(root *utils.Tree, data int) bool {
+	if root == nil {
+		return false
+	}
+	if root.Data == data {
+		return true
+	}
+	nodeContainer := []*utils.Tree{root}
+
+	for len(nodeContainer) > 0 {
+		node := nodeContainer[0]          // copy the first node
+		nodeContainer = nodeContainer[1:] // remove the first node
+
+		// check the next node in the nodeContainer
+		if root.Left != nil {
+
+			if nodeContainer[0].Data == data {
+				return true
+			}
+			nodeContainer = append(nodeContainer, node.Left)
+
+		}
+
+		if root.Right != nil {
+
+			if nodeContainer[1].Data == data {
+				return true
+			}
+			nodeContainer = append(nodeContainer, node.Right)
+
+		}
+	}
+
+	return false
 }
