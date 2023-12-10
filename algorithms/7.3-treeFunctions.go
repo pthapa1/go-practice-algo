@@ -71,3 +71,11 @@ func FindItemBreadthFirst(root *utils.Tree, data int) bool {
 
 	return false
 }
+
+func DeleteItemDepthFirst(root *utils.Tree, data int) bool {
+	// Find item first, if it does not exist then return false.
+	// if the item exist, delete the node. It's parent's left or right side := nil
+	// what if the root is the item we are trying to delete?
+	// what do you replace the node with?
+	return false
+}
