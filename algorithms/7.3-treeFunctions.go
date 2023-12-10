@@ -52,23 +52,20 @@ func FindItemBreadthFirst(root *utils.Tree, data int) bool {
 		node := nodeContainer[0]          // copy the first node
 		nodeContainer = nodeContainer[1:] // remove the first node
 
-		// check the next node in the nodeContainer
-		if root.Left != nil {
-
-			if nodeContainer[0].Data == data {
-				return true
-			}
-			nodeContainer = append(nodeContainer, node.Left)
-
+		if node.Left != nil && node.Left.Data == data {
+			return true
 		}
 
-		if root.Right != nil {
+		if node.Right != nil && node.Right.Data == data {
+			return true
+		}
+		// if the childrens do not have items, queue more nodes
+		if node.Left != nil {
+			nodeContainer = append(nodeContainer, node.Left)
+		}
 
-			if nodeContainer[1].Data == data {
-				return true
-			}
+		if node.Right != nil {
 			nodeContainer = append(nodeContainer, node.Right)
-
 		}
 	}
 

@@ -10,22 +10,27 @@ type Treemain struct {
 	Left  *Treemain
 }
 
-func recurseTheTree(currentNode *Treemain, path []int) []int {
-	if currentNode == nil {
-		return path
+func FindItemDepthFirst(root *Treemain, data int) bool {
+	// assuming the tree is not binary search tree
+
+	// safety first
+	if root == nil {
+		return false
 	}
 
-	path = recurseTheTree(currentNode.Left, path)
-	path = recurseTheTree(currentNode.Right, path)
-	path = append(path, currentNode.Data)
+	// if the node has the item we are looking for.
+	if data == root.Data {
+		return true
+	}
 
-	return path
-}
+	// search if the item item exist on the left subtree
+	answerFromTheLeft := FindItemDepthFirst(root.Left, data)
 
-func searchTree(head *Treemain) []int {
-	newPath := []int{}
-	result := recurseTheTree(head, newPath)
-	return result
+	if answerFromTheLeft {
+		return true
+	}
+
+	return FindItemDepthFirst(root.Right, data)
 }
 
 func main() {
@@ -70,10 +75,8 @@ func main() {
 			},
 		},
 	}
-	testSlice := []int{2, 4, 9, 19}
 
-	fmt.Println(testSlice[1:], "See the magic", len(testSlice), len(testSlice[1:]))
+	result := FindItemDepthFirst(tree1, 33)
 
-	result := searchTree(tree1)
-	fmt.Println(result)
+	fmt.Println("result", result)
 }
