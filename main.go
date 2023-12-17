@@ -4,69 +4,101 @@ import (
 	"fmt"
 )
 
-type Treemain struct {
+type Tree struct {
 	Data  int
-	Right *Treemain
-	Left  *Treemain
+	Right *Tree
+	Left  *Tree
 }
 
-func FindItemDepthFirst(root *Treemain, data int) bool {
-	// assuming the tree is not binary search tree
+// Helper function to find the minimum value node in the subtree
+// rooted with the provided node
+func minValueNode(node *Tree) *Tree {
+	current := node
+	for current.Left != nil {
+		current = current.Left
+	}
+	return current
+}
 
-	// safety first
+// Deletes a node with the given data and returns the new root of the subtree
+// sorted binary search tree
+func DeleteItemDepthFirst(root *Tree, dataToDelete int) *Tree {
 	if root == nil {
-		return false
+		return root
 	}
 
-	// if the node has the item we are looking for.
-	if data == root.Data {
-		return true
+	// If the data to be deleted is smaller than the root's data,
+	// then it lies in the left subtree
+	if dataToDelete < root.Data {
+		root.Left = DeleteItemDepthFirst(root.Left, dataToDelete)
+	} else if dataToDelete > root.Data { // If the data to be deleted is greater than the root's data, then it lies in the right subtree
+		root.Right = DeleteItemDepthFirst(root.Right, dataToDelete)
+	} else {
+		// Node with only one child or no child
+		if root.Left == nil {
+			return root.Right
+		} else if root.Right == nil {
+			return root.Left
+		}
+
+		// Node with two children: Get the inorder successor (smallest
+		// in the right subtree)
+		temp := minValueNode(root.Right)
+
+		// Copy the inorder successor's content to this node
+		root.Data = temp.Data
+
+		// Delete the inorder successor
+		root.Right = DeleteItemDepthFirst(root.Right, temp.Data)
 	}
+	return root
+}
 
-	// search if the item item exist on the left subtree
-	answerFromTheLeft := FindItemDepthFirst(root.Left, data)
-
-	if answerFromTheLeft {
-		return true
+func printTree(root *Tree, level int) {
+	if root != nil {
+		printTree(root.Right, level+1)
+		for i := 0; i < level; i++ {
+			fmt.Print("   ")
+		}
+		fmt.Println(root.Data)
+		printTree(root.Left, level+1)
 	}
-
-	return FindItemDepthFirst(root.Right, data)
 }
 
 func main() {
-	tree1 := &Treemain{
+	tree1 := &Tree{
 		Data: 20,
-		Right: &Treemain{
+		Right: &Tree{
 			Data: 50,
-			Right: &Treemain{
+			Right: &Tree{
 				Data:  100,
 				Right: nil,
 				Left:  nil,
 			},
-			Left: &Treemain{
+			Left: &Tree{
 				Data: 30,
-				Right: &Treemain{
+				Right: &Tree{
 					Data:  45,
 					Right: nil,
 					Left:  nil,
 				},
-				Left: &Treemain{
+				Left: &Tree{
 					Data:  29,
 					Right: nil,
 					Left:  nil,
 				},
 			},
 		},
-		Left: &Treemain{
+		Left: &Tree{
 			Data: 10,
-			Right: &Treemain{
+			Right: &Tree{
 				Data:  15,
 				Right: nil,
 				Left:  nil,
 			},
-			Left: &Treemain{
+			Left: &Tree{
 				Data: 5,
-				Right: &Treemain{
+				Right: &Tree{
 					Data:  7,
 					Right: nil,
 					Left:  nil,
@@ -75,8 +107,18 @@ func main() {
 			},
 		},
 	}
+	fmt.Println(tree1)
 
-	result := FindItemDepthFirst(tree1, 33)
+	root := &Tree{Data: 20}
+	root.Left = &Tree{Data: 10}
+	root.Left.Left = &Tree{Data: 5}
+	root.Left.Right = &Tree{Data: 15}
 
-	fmt.Println("result", result)
+	fmt.Println("Original tree:")
+	printTree(root, 0)
+
+	root = DeleteItemDepthFirst(root, 20) // Delete root node
+
+	fmt.Println("Tree after deleting 20:")
+	printTree(root, 0)
 }

@@ -72,10 +72,65 @@ func FindItemBreadthFirst(root *utils.Tree, data int) bool {
 	return false
 }
 
-func DeleteItemDepthFirst(root *utils.Tree, data int) bool {
-	// Find item first, if it does not exist then return false.
-	// if the item exist, delete the node. It's parent's left or right side := nil
-	// what if the root is the item we are trying to delete?
-	// what do you replace the node with?
-	return false
+func findMax(node *utils.Tree) *utils.Tree {
+	current := node
+	if current.Right != nil {
+		current = current.Right
+	}
+	return current
+}
+
+func findMin(node *utils.Tree) *utils.Tree {
+	current := node
+	if current.Left != nil {
+		current = current.Left
+	}
+	return current
+}
+
+func DeleteItemDepthFirst(root *utils.Tree, dataToDelete int) *utils.Tree {
+	if root == nil {
+		return root
+	}
+
+	// if the root is the data we are trying to delete and
+	if root.Data == dataToDelete {
+		// Node with no children
+		if root.Left == nil && root.Right == nil {
+			root = nil
+		}
+		// Node with only one child
+		if root.Right == nil {
+			return root.Left
+		} else if root.Left == nil {
+			return root.Right
+		}
+
+		/* If node has two childeren, we need to pick which child should be new root. It could be either one.
+		   Or it could be based on some criteria, for now lets make left child as root if available.
+		*/
+		if root.Left != nil {
+			replacement := findMax(
+				root.Left,
+			) // find the maximum in the left subtree
+			root.Data = replacement.Data // Replace root data with replacement data
+			root.Left = DeleteItemDepthFirst(
+				root.Left,
+				replacement.Data,
+			) // Recursively delete the root node
+			return root
+		} else {
+			replacement := findMin(root.Right)                              // Find the minimum in the right subtree
+			root.Data = replacement.Data                                    // Replace root data with replacement data
+			root.Right = DeleteItemDepthFirst(root.Right, replacement.Data) // Recursively delete the replacement node
+			return root
+		}
+
+	}
+
+	// Recurse on left and right children
+	root.Left = DeleteItemDepthFirst(root.Left, dataToDelete)
+	root.Right = DeleteItemDepthFirst(root.Right, dataToDelete)
+
+	return root
 }
