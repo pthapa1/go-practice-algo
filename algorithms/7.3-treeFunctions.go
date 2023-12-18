@@ -1,6 +1,10 @@
+// all functions assume that the tree is not sorted
+
 package algo
 
 import (
+	"fmt"
+
 	"github.com/pthapa1/go-practice-algo/utils"
 )
 
@@ -72,65 +76,37 @@ func FindItemBreadthFirst(root *utils.Tree, data int) bool {
 	return false
 }
 
-func findMax(node *utils.Tree) *utils.Tree {
-	current := node
-	if current.Right != nil {
-		current = current.Right
+// returns either the right most or the left most value from the tree to replce item you want to delete
+func rightOrLeftMostValue(node *utils.Tree) (bool, int) {
+	if node == nil {
+		return false, 0
 	}
-	return current
-}
 
-func findMin(node *utils.Tree) *utils.Tree {
-	current := node
-	if current.Left != nil {
-		current = current.Left
+	if node.Right != nil {
+		return rightOrLeftMostValue(node.Right)
+	} else if node.Left != nil {
+		return rightOrLeftMostValue(node.Left)
 	}
-	return current
+	return true, node.Data
 }
 
 func DeleteItemDepthFirst(root *utils.Tree, dataToDelete int) *utils.Tree {
+	/* to delete the item
+		for leaf: set the leaf node to nil and you are done.
+		for all other deletion, take the rightmost value from the tree
+		and place the value on the node we are deleting. Also, remove the rightmost value
+		   * node with only one child
+	     * node with both child
+	*/
+	// base case or safety first
 	if root == nil {
 		return root
 	}
+	success, replacementVal := rightOrLeftMostValue(root)
 
-	// if the root is the data we are trying to delete and
-	if root.Data == dataToDelete {
-		// Node with no children
-		if root.Left == nil && root.Right == nil {
-			root = nil
-		}
-		// Node with only one child
-		if root.Right == nil {
-			return root.Left
-		} else if root.Left == nil {
-			return root.Right
-		}
-
-		/* If node has two childeren, we need to pick which child should be new root. It could be either one.
-		   Or it could be based on some criteria, for now lets make left child as root if available.
-		*/
-		if root.Left != nil {
-			replacement := findMax(
-				root.Left,
-			) // find the maximum in the left subtree
-			root.Data = replacement.Data // Replace root data with replacement data
-			root.Left = DeleteItemDepthFirst(
-				root.Left,
-				replacement.Data,
-			) // Recursively delete the root node
-			return root
-		} else {
-			replacement := findMin(root.Right)                              // Find the minimum in the right subtree
-			root.Data = replacement.Data                                    // Replace root data with replacement data
-			root.Right = DeleteItemDepthFirst(root.Right, replacement.Data) // Recursively delete the replacement node
-			return root
-		}
-
-	}
-
-	// Recurse on left and right children
-	root.Left = DeleteItemDepthFirst(root.Left, dataToDelete)
-	root.Right = DeleteItemDepthFirst(root.Right, dataToDelete)
-
+	// using the rightOrLeftMostValue, replace the item we are trying to delete
+	// unused values
+	fmt.Println(dataToDelete)
+	fmt.Println(success, replacementVal)
 	return root
 }
