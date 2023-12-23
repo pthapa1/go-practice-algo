@@ -7,6 +7,7 @@ import (
 	"github.com/pthapa1/go-practice-algo/utils"
 )
 
+// search both depthFirst and BreadthFirstSearch
 func TestFindItmesInTree(t *testing.T) {
 	tree := utils.RandomTree()
 	includeditems := []int{20, 10, 50, 15, 7, 45}
@@ -39,4 +40,9 @@ func TestFindItmesInTree(t *testing.T) {
 			)
 		}
 	}
+}
+
+func TestDeleteItemsInTree() {
+	// test that when deleting node or any other element in the random tree, the tree
+	// there are no errors
 }

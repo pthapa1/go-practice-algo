@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/pthapa1/go-practice-algo/utils"
 )
 
 type Tree struct {
@@ -24,7 +26,7 @@ func rightOrLeftMostValue(node *Tree) *Tree {
 	return node
 }
 
-func printTree(root *Tree, level int) {
+func printTree(root *utils.Tree, level int) {
 	if root != nil {
 		printTree(root.Right, level+1)
 		for i := 0; i < level; i++ {
@@ -82,10 +84,15 @@ func main() {
 	root.Right.Left = &Tree{Data: 12}
 	root.Right.Right = &Tree{Data: 13}
 
-	fmt.Println("Original tree:")
-	printTree(root, 0)
+	// fmt.Println("Original tree:")
+	// printTree(root, 0)
 
-	myLeaf := deleteDepthFirst(root, 11)
+	// myLeaf := deleteDepthFirst(root, 11)
 	fmt.Println("✍️")
-	printTree(myLeaf, 0)
+	// printTree(myLeaf, 0)
+
+	randomTree := utils.RandomTree()
+	fmt.Println("This is a random tree")
+	printTree(randomTree, 0)
+	// check deleting random tree's node
 }
