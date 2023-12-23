@@ -10,48 +10,18 @@ type Tree struct {
 	Left  *Tree
 }
 
-// Helper function to find the minimum value node in the subtree
-// rooted with the provided node
-func minValueNode(node *Tree) *Tree {
-	current := node
-	for current.Left != nil {
-		current = current.Left
-	}
-	return current
-}
-
-// Deletes a node with the given data and returns the new root of the subtree
-// sorted binary search tree
-func DeleteItemDepthFirst(root *Tree, dataToDelete int) *Tree {
-	if root == nil {
-		return root
+// returns either the right most or the left most pointer to the node
+func rightOrLeftMostValue(node *Tree) *Tree {
+	if node == nil {
+		return node
 	}
 
-	// If the data to be deleted is smaller than the root's data,
-	// then it lies in the left subtree
-	if dataToDelete < root.Data {
-		root.Left = DeleteItemDepthFirst(root.Left, dataToDelete)
-	} else if dataToDelete > root.Data { // If the data to be deleted is greater than the root's data, then it lies in the right subtree
-		root.Right = DeleteItemDepthFirst(root.Right, dataToDelete)
-	} else {
-		// Node with only one child or no child
-		if root.Left == nil {
-			return root.Right
-		} else if root.Right == nil {
-			return root.Left
-		}
-
-		// Node with two children: Get the inorder successor (smallest
-		// in the right subtree)
-		temp := minValueNode(root.Right)
-
-		// Copy the inorder successor's content to this node
-		root.Data = temp.Data
-
-		// Delete the inorder successor
-		root.Right = DeleteItemDepthFirst(root.Right, temp.Data)
+	if node.Right != nil {
+		return rightOrLeftMostValue(node.Right)
+	} else if node.Left != nil {
+		return rightOrLeftMostValue(node.Left)
 	}
-	return root
+	return node
 }
 
 func printTree(root *Tree, level int) {
@@ -65,60 +35,57 @@ func printTree(root *Tree, level int) {
 	}
 }
 
-func main() {
-	tree1 := &Tree{
-		Data: 20,
-		Right: &Tree{
-			Data: 50,
-			Right: &Tree{
-				Data:  100,
-				Right: nil,
-				Left:  nil,
-			},
-			Left: &Tree{
-				Data: 30,
-				Right: &Tree{
-					Data:  45,
-					Right: nil,
-					Left:  nil,
-				},
-				Left: &Tree{
-					Data:  29,
-					Right: nil,
-					Left:  nil,
-				},
-			},
-		},
-		Left: &Tree{
-			Data: 10,
-			Right: &Tree{
-				Data:  15,
-				Right: nil,
-				Left:  nil,
-			},
-			Left: &Tree{
-				Data: 5,
-				Right: &Tree{
-					Data:  7,
-					Right: nil,
-					Left:  nil,
-				},
-				Left: nil,
-			},
-		},
+func deleteDepthFirst(root *Tree, dataToDelete int) *Tree {
+	if root == nil {
+		return root
 	}
-	fmt.Println(tree1)
 
+	if root.Right != nil && root.Right.Data == dataToDelete {
+		// leaf: node without any children
+		if root.Right.Right == nil && root.Right.Left == nil {
+			root.Right = nil
+			return root
+		} else {
+			// node with children
+			replacementNode := rightOrLeftMostValue(root)
+			root.Right.Data = replacementNode.Data
+			root.Right = deleteDepthFirst(root.Right, replacementNode.Data)
+			return root
+		}
+	}
+
+	if root.Left != nil && root.Left.Data == dataToDelete {
+		// leaf: node without any children
+		if root.Left.Right == nil && root.Left.Left == nil {
+			root.Left = nil
+			return root
+		} else {
+			replacementNode := rightOrLeftMostValue(root)
+			root.Left.Data = replacementNode.Data
+			root.Left = deleteDepthFirst(root.Left, replacementNode.Data)
+			return root
+		}
+	}
+
+	deleteDepthFirst(root.Right, dataToDelete)
+	deleteDepthFirst(root.Left, dataToDelete)
+
+	return root
+}
+
+func main() {
 	root := &Tree{Data: 20}
 	root.Left = &Tree{Data: 10}
 	root.Left.Left = &Tree{Data: 5}
 	root.Left.Right = &Tree{Data: 15}
+	root.Right = &Tree{Data: 11}
+	root.Right.Left = &Tree{Data: 12}
+	root.Right.Right = &Tree{Data: 13}
 
 	fmt.Println("Original tree:")
 	printTree(root, 0)
 
-	root = DeleteItemDepthFirst(root, 20) // Delete root node
-
-	fmt.Println("Tree after deleting 20:")
-	printTree(root, 0)
+	myLeaf := deleteDepthFirst(root, 11)
+	fmt.Println("✍️")
+	printTree(myLeaf, 0)
 }

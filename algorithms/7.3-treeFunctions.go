@@ -3,8 +3,6 @@
 package algo
 
 import (
-	"fmt"
-
 	"github.com/pthapa1/go-practice-algo/utils"
 )
 
@@ -76,10 +74,10 @@ func FindItemBreadthFirst(root *utils.Tree, data int) bool {
 	return false
 }
 
-// returns either the right most or the left most value from the tree to replce item you want to delete
-func rightOrLeftMostValue(node *utils.Tree) (bool, int) {
+// returns either the right most or the left most pointer of the node
+func rightOrLeftMostValue(node *utils.Tree) *utils.Tree {
 	if node == nil {
-		return false, 0
+		return node
 	}
 
 	if node.Right != nil {
@@ -87,26 +85,43 @@ func rightOrLeftMostValue(node *utils.Tree) (bool, int) {
 	} else if node.Left != nil {
 		return rightOrLeftMostValue(node.Left)
 	}
-	return true, node.Data
+	return node
 }
 
-func DeleteItemDepthFirst(root *utils.Tree, dataToDelete int) *utils.Tree {
-	/* to delete the item
-		for leaf: set the leaf node to nil and you are done.
-		for all other deletion, take the rightmost value from the tree
-		and place the value on the node we are deleting. Also, remove the rightmost value
-		   * node with only one child
-	     * node with both child
-	*/
-	// base case or safety first
+func DeleteDepthFirst(root *utils.Tree, dataToDelete int) *utils.Tree {
 	if root == nil {
 		return root
 	}
-	success, replacementVal := rightOrLeftMostValue(root)
 
-	// using the rightOrLeftMostValue, replace the item we are trying to delete
-	// unused values
-	fmt.Println(dataToDelete)
-	fmt.Println(success, replacementVal)
+	if root.Right != nil && root.Right.Data == dataToDelete {
+		// leaf: node without any children
+		if root.Right.Right == nil && root.Right.Left == nil {
+			root.Right = nil
+			return root
+		} else {
+			// node with children
+			replacementNode := rightOrLeftMostValue(root)
+			root.Right.Data = replacementNode.Data
+			root.Right = DeleteDepthFirst(root.Right, replacementNode.Data)
+			return root
+		}
+	}
+
+	if root.Left != nil && root.Left.Data == dataToDelete {
+		// leaf: node without any children
+		if root.Left.Right == nil && root.Left.Left == nil {
+			root.Left = nil
+			return root
+		} else {
+			replacementNode := rightOrLeftMostValue(root)
+			root.Left.Data = replacementNode.Data
+			root.Left = DeleteDepthFirst(root.Left, replacementNode.Data)
+			return root
+		}
+	}
+
+	DeleteDepthFirst(root.Right, dataToDelete)
+	DeleteDepthFirst(root.Left, dataToDelete)
+
 	return root
 }
