@@ -1,6 +1,7 @@
 package algo
 
 import (
+	"fmt"
 	"slices"
 	"testing"
 
@@ -91,8 +92,12 @@ func TestDeleteItemsInTree(t *testing.T) {
 
 	// deleting node
 
-	deletionRootnode := algo.DeleteDepthFirstRootNode(deletedTree, nodeData)
+	deletionRootnode, finalTree := algo.DeleteDepthFirstRootNode(deletedTree, nodeData)
+	fmt.Println(finalTree.Data)
 	if !deletionRootnode {
 		t.Errorf("Node data '%v' should be deleted but it's not", nodeData)
+	}
+	if finalTree.Data != 15 {
+		t.Errorf("Expected root data to be %v, but got %v", 15, finalTree.Data)
 	}
 }

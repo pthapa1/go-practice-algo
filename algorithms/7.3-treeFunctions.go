@@ -88,7 +88,7 @@ func RightOrLeftMostNode(node *utils.Tree) *utils.Tree {
 	return node
 }
 
-// given a tree, and a data to delete, delete the node containing the data
+// delete the node containing the data on children
 func DeleteDepthFirst(root *utils.Tree, dataToDelete int) *utils.Tree {
 	if root == nil {
 		return root
@@ -129,39 +129,19 @@ func DeleteDepthFirst(root *utils.Tree, dataToDelete int) *utils.Tree {
 
 // after writing tests for the funciton above, I realized that my function does not
 // delete the root node. So, I wrote another function to delete the root node.
-func DeleteDepthFirstRootNode(root *utils.Tree, rootValToDel int) bool {
+// also, couldn't quite figure out how to integrate it into one function. It's getting complicated
+func DeleteDepthFirstRootNode(root *utils.Tree, rootValToDel int) (bool, *utils.Tree) {
 	if root == nil {
-		return false
+		return false, root
 	}
 
 	if root.Data != rootValToDel {
-		return false
+		return false, root
 	}
-
-	var replacementNode *utils.Tree
-	var fromLeftSubtree bool
-
-	// Check if the left subtree exists
-	if root.Left != nil {
-		replacementNode = RightOrLeftMostNode(root.Left)
-		fromLeftSubtree = true
-	} else if root.Right != nil {
-		replacementNode = RightOrLeftMostNode(root.Right)
-		fromLeftSubtree = false
-	} else {
-		// Root is a leaf node, nothing to replace with
-		return false
-	}
-
-	// Replace root data with replacement node data
+	replacementNode := RightOrLeftMostNode(
+		root.Left,
+	) // let get the rightmost value from the left subtree
 	root.Data = replacementNode.Data
-
-	// Delete the replacement node
-	if fromLeftSubtree {
-		root.Left = DeleteDepthFirst(root.Left, replacementNode.Data)
-	} else {
-		root.Right = DeleteDepthFirst(root.Right, replacementNode.Data)
-	}
-
-	return true
+	root = DeleteDepthFirst(root.Left, replacementNode.Data)
+	return true, root
 }
