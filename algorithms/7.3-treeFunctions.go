@@ -129,7 +129,6 @@ func DeleteDepthFirst(root *utils.Tree, dataToDelete int) *utils.Tree {
 
 // after writing tests for the funciton above, I realized that my function does not
 // delete the root node. So, I wrote another function to delete the root node.
-// I can probably combine these two function but I am too lazy to do that
 func DeleteDepthFirstRootNode(root *utils.Tree, rootValToDel int) bool {
 	if root == nil {
 		return false
@@ -159,34 +158,10 @@ func DeleteDepthFirstRootNode(root *utils.Tree, rootValToDel int) bool {
 
 	// Delete the replacement node
 	if fromLeftSubtree {
-		root.Left = deleteSpecificNode(root.Left, replacementNode.Data)
+		root.Left = DeleteDepthFirst(root.Left, replacementNode.Data)
 	} else {
-		root.Right = deleteSpecificNode(root.Right, replacementNode.Data)
+		root.Right = DeleteDepthFirst(root.Right, replacementNode.Data)
 	}
 
 	return true
-}
-
-// Function to delete a specific node by value
-func deleteSpecificNode(node *utils.Tree, data int) *utils.Tree {
-	if node == nil {
-		return nil
-	}
-
-	if node.Data == data {
-		if node.Left == nil && node.Right == nil {
-			// Node is a leaf
-			return nil
-		} else if node.Left != nil {
-			// Promote the left subtree
-			return node.Left
-		} else {
-			// Promote the right subtree
-			return node.Right
-		}
-	}
-
-	node.Left = deleteSpecificNode(node.Left, data)
-	node.Right = deleteSpecificNode(node.Right, data)
-	return node
 }
