@@ -88,6 +88,7 @@ func RightOrLeftMostNode(node *utils.Tree) *utils.Tree {
 	return node
 }
 
+// given a tree, and a data to delete, delete the node containing the data
 func DeleteDepthFirst(root *utils.Tree, dataToDelete int) *utils.Tree {
 	if root == nil {
 		return root
@@ -129,12 +130,12 @@ func DeleteDepthFirst(root *utils.Tree, dataToDelete int) *utils.Tree {
 // after writing tests for the funciton above, I realized that my function does not
 // delete the root node. So, I wrote another function to delete the root node.
 // I can probably combine these two function but I am too lazy to do that
-func DeleteDepthFirstRootNode(root *utils.Tree, rootVal int) bool {
+func DeleteDepthFirstRootNode(root *utils.Tree, rootValToDel int) bool {
 	if root == nil {
 		return false
 	}
 
-	if root.Data != rootVal {
+	if root.Data != rootValToDel {
 		return false
 	}
 
