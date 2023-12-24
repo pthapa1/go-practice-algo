@@ -45,4 +45,14 @@ func TestFindItmesInTree(t *testing.T) {
 func TestDeleteItemsInTree() {
 	// test that when deleting node or any other element in the random tree, the tree
 	// there are no errors
+
+	// what happens when you delete node
+	// leaf and
+	// two random nodes with one and two children each
+
+	// create a function that generates the slice.
+	// and compare those two slices.
+
+	// find the difference between pre order recursion 7
+	// and the binary tree utils
 }

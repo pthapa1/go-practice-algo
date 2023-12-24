@@ -94,5 +94,6 @@ func main() {
 	randomTree := utils.RandomTree()
 	fmt.Println("This is a random tree")
 	printTree(randomTree, 0)
+
 	// check deleting random tree's node
 }

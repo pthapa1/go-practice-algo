@@ -51,3 +51,16 @@ func RandomTree() *Tree {
 	}
 	return tree1
 }
+
+func GenerateSliceOfNodes(root *Tree) []int {
+	values := []int{}
+	if root == nil {
+		return values
+	}
+	values = append(values, root.Data)
+
+	values = append(values, GenerateSliceOfNodes(root.Left)...)
+	values = append(values, GenerateSliceOfNodes(root.Right)...)
+
+	return values
+}
