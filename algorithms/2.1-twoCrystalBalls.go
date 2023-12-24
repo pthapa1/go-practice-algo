@@ -1,14 +1,12 @@
 package algo
 
 import (
-	"fmt"
 	"math"
 )
 
 func TwoCrystalBalls(breaks []bool) int {
-	var jumpAmount = math.Floor(math.Sqrt(float64(len(breaks))))
+	jumpAmount := math.Floor(math.Sqrt(float64(len(breaks))))
 	i := int(jumpAmount)
-	fmt.Println("value of i =", i)
 	for ; i < len(breaks); i = i + int(jumpAmount) {
 		if breaks[i] {
 			break

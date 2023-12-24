@@ -96,4 +96,5 @@ func main() {
 	printTree(randomTree, 0)
 
 	// check deleting random tree's node
+	fmt.Println("Slice: ", utils.GenerateSliceOfNodes(randomTree))
 }

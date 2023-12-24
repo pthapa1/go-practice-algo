@@ -34,19 +34,16 @@ func (l *LinkedList[T]) PrintAllSLLData() []T {
 	nodeValueInlist := []T{}
 	for toPrint != nil {
 		data := toPrint.Data
-		fmt.Printf("%v -->", data)
 		nodeValueInlist = append(nodeValueInlist, data)
 		toPrint = toPrint.Next
 	}
 	fmt.Println()
-	fmt.Println(nodeValueInlist)
+	// fmt.Println(nodeValueInlist)
 	return nodeValueInlist
-
 }
 
 // Delete a node given it's value.
 func (l *LinkedList[T]) DeleteNode(value T) ReturnType[T] {
-
 	if l.length == 0 {
 		return ReturnType[T]{Data: nil, Error: fmt.Errorf("list is empty, nothing to delete")}
 	}
@@ -63,7 +60,10 @@ func (l *LinkedList[T]) DeleteNode(value T) ReturnType[T] {
 		// what if it does not exists.
 		if toDelete.Next.Next == nil {
 			// value does not exists in
-			return ReturnType[T]{Data: nil, Error: fmt.Errorf("cannot delete Node since value does not exist in this SLL")}
+			return ReturnType[T]{
+				Data:  nil,
+				Error: fmt.Errorf("cannot delete Node since value does not exist in this SLL"),
+			}
 		}
 		toDelete = toDelete.Next
 	}

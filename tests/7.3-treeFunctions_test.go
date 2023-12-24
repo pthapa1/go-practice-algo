@@ -1,6 +1,7 @@
 package algo
 
 import (
+	"slices"
 	"testing"
 
 	algo "github.com/pthapa1/go-practice-algo/algorithms"
@@ -42,17 +43,56 @@ func TestFindItmesInTree(t *testing.T) {
 	}
 }
 
-func TestDeleteItemsInTree() {
-	// test that when deleting node or any other element in the random tree, the tree
-	// there are no errors
+func TestDeleteItemsInTree(t *testing.T) {
+	randomTree := utils.RandomTree()
 
-	// what happens when you delete node
-	// leaf and
-	// two random nodes with one and two children each
+	nodeData := 20
+	leaf1 := 100
+	leaf2 := 7
+	nodeWithChild := 10
 
-	// create a function that generates the slice.
-	// and compare those two slices.
+	// deleting leaves
 
-	// find the difference between pre order recursion 7
-	// and the binary tree utils
+	deletedTree := algo.DeleteDepthFirst(randomTree, leaf1)
+	deletedSlice := utils.GenerateSliceOfNodes(deletedTree)
+	if slices.Contains(deletedSlice, leaf1) {
+		t.Errorf("Expected %v to not exist on TestDeleteItemsInTree", leaf1)
+	}
+
+	deletedTree = algo.DeleteDepthFirst(deletedTree, leaf2)
+	deletedSlice = utils.GenerateSliceOfNodes(deletedTree)
+	if slices.Contains(deletedSlice, leaf2) {
+		t.Errorf("Expected %v to not exist on TestDeleteItemsInTree", leaf2)
+	}
+
+	// deleting a node with children
+	deletedTree = algo.DeleteDepthFirst(deletedTree, nodeWithChild)
+	deletedSlice = utils.GenerateSliceOfNodes(deletedTree)
+	if slices.Contains(deletedSlice, nodeWithChild) {
+		t.Errorf("Tree should not contain node %v after deletion", nodeWithChild)
+	}
+
+	// replacement node should be removed
+	replacementData := algo.RightOrLeftMostNode(deletedTree).Data
+	counter := 0
+	for _, v := range deletedSlice {
+		if v == replacementData {
+			counter++
+		}
+	}
+	// assumes that the tree we are testing with has one distinct element
+	// on each node. Works on this test.
+	if counter > 1 {
+		t.Errorf(
+			"Replacement Node exist in the original position. Multiple occurances of: %v",
+			replacementData,
+		)
+	}
+
+	// deleting node
+
+	deletionRootnode := algo.DeleteDepthFirstRootNode(deletedTree, nodeData)
+	if !deletionRootnode {
+		t.Errorf("Node data '%v' should be deleted but it's not", nodeData)
+	}
 }

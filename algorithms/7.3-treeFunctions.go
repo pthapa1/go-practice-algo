@@ -75,15 +75,15 @@ func FindItemBreadthFirst(root *utils.Tree, data int) bool {
 }
 
 // returns either the right most or the left most pointer of the node
-func rightOrLeftMostValue(node *utils.Tree) *utils.Tree {
+func RightOrLeftMostNode(node *utils.Tree) *utils.Tree {
 	if node == nil {
 		return node
 	}
 
 	if node.Right != nil {
-		return rightOrLeftMostValue(node.Right)
+		return RightOrLeftMostNode(node.Right)
 	} else if node.Left != nil {
-		return rightOrLeftMostValue(node.Left)
+		return RightOrLeftMostNode(node.Left)
 	}
 	return node
 }
@@ -99,8 +99,8 @@ func DeleteDepthFirst(root *utils.Tree, dataToDelete int) *utils.Tree {
 			root.Right = nil
 			return root
 		} else {
-			// node with children
-			replacementNode := rightOrLeftMostValue(root)
+			// node with children, has at least 1
+			replacementNode := RightOrLeftMostNode(root.Right)
 			root.Right.Data = replacementNode.Data
 			root.Right = DeleteDepthFirst(root.Right, replacementNode.Data)
 			return root
@@ -113,7 +113,7 @@ func DeleteDepthFirst(root *utils.Tree, dataToDelete int) *utils.Tree {
 			root.Left = nil
 			return root
 		} else {
-			replacementNode := rightOrLeftMostValue(root)
+			replacementNode := RightOrLeftMostNode(root.Left)
 			root.Left.Data = replacementNode.Data
 			root.Left = DeleteDepthFirst(root.Left, replacementNode.Data)
 			return root
@@ -124,4 +124,68 @@ func DeleteDepthFirst(root *utils.Tree, dataToDelete int) *utils.Tree {
 	DeleteDepthFirst(root.Left, dataToDelete)
 
 	return root
+}
+
+// after writing tests for the funciton above, I realized that my function does not
+// delete the root node. So, I wrote another function to delete the root node.
+// I can probably combine these two function but I am too lazy to do that
+func DeleteDepthFirstRootNode(root *utils.Tree, rootVal int) bool {
+	if root == nil {
+		return false
+	}
+
+	if root.Data != rootVal {
+		return false
+	}
+
+	var replacementNode *utils.Tree
+	var fromLeftSubtree bool
+
+	// Check if the left subtree exists
+	if root.Left != nil {
+		replacementNode = RightOrLeftMostNode(root.Left)
+		fromLeftSubtree = true
+	} else if root.Right != nil {
+		replacementNode = RightOrLeftMostNode(root.Right)
+		fromLeftSubtree = false
+	} else {
+		// Root is a leaf node, nothing to replace with
+		return false
+	}
+
+	// Replace root data with replacement node data
+	root.Data = replacementNode.Data
+
+	// Delete the replacement node
+	if fromLeftSubtree {
+		root.Left = deleteSpecificNode(root.Left, replacementNode.Data)
+	} else {
+		root.Right = deleteSpecificNode(root.Right, replacementNode.Data)
+	}
+
+	return true
+}
+
+// Function to delete a specific node by value
+func deleteSpecificNode(node *utils.Tree, data int) *utils.Tree {
+	if node == nil {
+		return nil
+	}
+
+	if node.Data == data {
+		if node.Left == nil && node.Right == nil {
+			// Node is a leaf
+			return nil
+		} else if node.Left != nil {
+			// Promote the left subtree
+			return node.Left
+		} else {
+			// Promote the right subtree
+			return node.Right
+		}
+	}
+
+	node.Left = deleteSpecificNode(node.Left, data)
+	node.Right = deleteSpecificNode(node.Right, data)
+	return node
 }

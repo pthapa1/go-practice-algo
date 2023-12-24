@@ -52,6 +52,7 @@ func RandomTree() *Tree {
 	return tree1
 }
 
+// returns all the values of a binary tree as a slice
 func GenerateSliceOfNodes(root *Tree) []int {
 	values := []int{}
 	if root == nil {
