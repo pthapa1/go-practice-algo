@@ -1,9 +1,12 @@
-// general tree traversals,
-// this is depth first
-// perOerder
-// inOrder &
-// postOrder search
-// assuming that tree exists.
+/*
+Note: Binary tree is a tree where each node has two children
+general tree traversals,
+this is depth first
+perOerder
+inOrder &
+postOrder search
+assuming that tree exists.
+*/
 
 package algo
 
