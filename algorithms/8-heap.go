@@ -53,6 +53,8 @@ It increases with log n
 
 package algo
 
+import "fmt"
+
 type MaxHeap struct {
 	Slice []int
 }
@@ -71,25 +73,15 @@ func parent(i int) int {
 	if i == 0 {
 		return 0
 	}
-	// // right child is always an even number
+	// right child is always an even number
 	if i%2 == 0 {
 		return (i - 2) / 2
 	}
 	// Left child is always an odd number
 	return (i - 1) / 2
 	// in fact this funciton always rounds down,
-	// if we could just return (i - 1 ) / 2
+	// so we can just return (i - 1 ) / 2
 	// but for my sanity, I am keeping it verbose
-}
-
-// given parent index, find the left
-func left(i int) int {
-	return (i * 2) + 1
-}
-
-// given parent index, find the right
-func right(i int) int {
-	return (i * 2) + 2
 }
 
 // Given two index, swap the actual values those index represent in the slice
@@ -107,4 +99,51 @@ func (h *MaxHeap) maxHeapifyUp(index int) {
 	}
 }
 
-// extract the largest value next
+// given parent index, find the left index
+func left(i int) int {
+	return (i * 2) + 1
+}
+
+// given parent index, find the right index
+func right(i int) int {
+	return (i * 2) + 2
+}
+
+// maxHeapifyDown will heapify from top down
+func (h *MaxHeap) maxHeapifyDown(index int) {
+	lastIndex := len(h.Slice) - 1
+
+	for left(index) <= lastIndex {
+		l, r := left(index), right(index)
+		indexToCompare := l
+		// if right index is within slice bounds(exists)
+		// and right value is greater than the left value
+		if r <= lastIndex && h.Slice[r] > h.Slice[l] {
+			indexToCompare = r
+		}
+		// we are done if parent is larger than the largest child
+		if h.Slice[index] >= h.Slice[indexToCompare] {
+			break
+		}
+		h.swap(index, indexToCompare)
+		// update the index so the while loop can continue
+		index = indexToCompare
+
+	}
+}
+
+// extract the largest value
+func (h *MaxHeap) ExtractLargestVal() int {
+	extractedValue := h.Slice[0] // first value is the largest value
+	lastIndex := len(h.Slice) - 1
+	if len(h.Slice) == 0 {
+		fmt.Println("Cannot extract from empty array")
+		return -1
+	}
+	// get the last item from the slice and copy it's value in head
+	h.Slice[0] = h.Slice[lastIndex]
+	// remove the last item. Make slisce shorter
+	h.Slice = h.Slice[:lastIndex]
+	h.maxHeapifyDown(0)
+	return extractedValue
+}

@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	m := &algo.MaxHeap{}
+	m := algo.MaxHeap{}
 	fmt.Println(m)
 	items := []int{1, 5, 7, 8, 9, 14, 16, 30, 34, 50}
 
@@ -15,4 +15,9 @@ func main() {
 		m.Insert(v)
 	}
 	fmt.Println("New heap", m.Slice)
+
+	for i := 0; i < 5; i++ {
+		m.ExtractLargestVal()
+		fmt.Println(m)
+	}
 }
