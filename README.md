@@ -11,4 +11,4 @@ Please visit back
 
 ##
 
-- Run tests with `go test ./tests/`
+- Run tests with `make test`
