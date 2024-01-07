@@ -22,26 +22,28 @@ for the tree above, the array would look like this
 heapArray := []int{50, 30, 40, 20, 15, 35, 25, 10, 5}
 * To calculate the index of children based on the parent's index,
 
+Importnat formula ‼️
 indexOfLeftChild = parentIndex * 2 + 1
 indexofRightChild = parentIndex * 2 + 2 (or add 1 to left child)
-👆 this is what we will use to calculate and find the child and parents
 
 --- Insert
 To insert a node to the tree,
-* first put the node to the bottom right of the tree. The last index in the array
-* Then, we compare the inserted number with it's parent.
+* Put the item at the end of the array. (Viaually: end open position on the tree above)
+* Then, we compare the inserted number with it's parent, with formulas above.
   * if the parent is smaller, we swap the position with it's parent.
-  * recurse the step until the parent is larger then the inserted item.
+  * Use a while loop until the parent is the largest.
 
---- Extraction
-To extract the highest key extract the root
-* first replace the root with the last item in the array. In our example, we would replace 50 with 5.
-* Compare the new root (5) with it's children, if any of the child is larger than the root, swap places.
-* recurse until the node's children are both smaller than the parent
+--- Extraction: highest key
+To extract the highest key
+* extract the first item in the array. (Viaually: the root of the tree)
+* Copy the value of the last item in the array to the head (can't leave a tree empty)
+* Remove the last item from the tree, since we just copied it's value to the root
+* finally, heapify down, compare it with it's largest children, if any child is larger than the val, swap
+>  Time Complexity O(log n) -- n is the number of items in the array
+>  Other time complexity of the heap depends on the worst part about this data structure.
 
---- Time Complexity O(log n) -- n is the number of items in the array
-Time complexity of the heap depends on the worst part about this data structure.
-In heap, the worst part about the operation is traversing the tree up and down when an item is
+In heap, the worst part about the operation is calculating
+the place for parent/child (traversing the tree up and down) when an item is
 * extracted
 * inserted
 In these two operations, the larger the height, the longer time it takes.
@@ -113,23 +115,54 @@ func right(i int) int {
 func (h *MaxHeap) maxHeapifyDown(index int) {
 	lastIndex := len(h.Slice) - 1
 
-	for left(index) <= lastIndex {
+	// Continue heapifying down as long as the right child of the current parent
+	// is within the bounds of the heap.
+	for right(index) <= lastIndex {
 		l, r := left(index), right(index)
-		indexToCompare := l
-		// if right index is within slice bounds(exists)
-		// and right value is greater than the left value
-		if r <= lastIndex && h.Slice[r] > h.Slice[l] {
-			indexToCompare = r
+		largest := index
+
+		// Check if left child exists and is greater than the parent
+		if l <= lastIndex && h.Slice[l] > h.Slice[largest] {
+			largest = l
 		}
-		// we are done if parent is larger than the largest child
-		if h.Slice[index] >= h.Slice[indexToCompare] {
+
+		// Check if right child exists and is greater than the current largest
+		if r <= lastIndex && h.Slice[r] > h.Slice[largest] {
+			largest = r
+		}
+
+		// If the largest is still the parent, the heap property is satisfied
+		if largest == index {
 			break
 		}
-		h.swap(index, indexToCompare)
-		// update the index so the while loop can continue
-		index = indexToCompare
 
+		// Swap the parent with the largest child
+		h.swap(index, largest)
+
+		// Move down the tree
+		index = largest
 	}
+	/*
+		// or we dan do this too
+				 // while at least 1 left child exists that's smaller or equal than the lastIndex
+				 for left(index) <= lastIndex {
+				 	l, r := left(index), right(index)
+				 	largest := l
+
+					if r <= lastIndex && h.Slice[r] > h.Slice[l] {
+					largest = r
+				 	}
+
+					// we are done if parent is larger than the largest child
+					if h.Slice[index] >= h.Slice[largest] {
+					break
+					}
+					h.swap(index, largest)
+					// update the index so the while loop can continue
+					index = largest
+
+					 }
+	*/
 }
 
 // extract the largest value
@@ -142,7 +175,7 @@ func (h *MaxHeap) ExtractLargestVal() int {
 	}
 	// get the last item from the slice and copy it's value in head
 	h.Slice[0] = h.Slice[lastIndex]
-	// remove the last item. Make slisce shorter
+	// remove the last item. Make slice shorter
 	h.Slice = h.Slice[:lastIndex]
 	h.maxHeapifyDown(0)
 	return extractedValue
