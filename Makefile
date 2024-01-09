@@ -1,2 +1,5 @@
+run: 
+	@go run .
+
 test:
-	@go test ./tests/
+	@go test ./algorithms_tests/
