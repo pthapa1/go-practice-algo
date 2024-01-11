@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	probelm := problems.ReverseString("hello")
+	probelm := problems.ReverseString("hello world")
 	fmt.Println(probelm)
 }

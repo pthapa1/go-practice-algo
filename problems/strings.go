@@ -6,7 +6,6 @@ import (
 
 // given a string, reverse it's character.
 func ReverseString(s string) string {
-	// hello should be olleh
 	if len(s) <= 1 {
 		return s
 	}
