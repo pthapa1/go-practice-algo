@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	probelm := problems.FindConcurrentChar("hello")
+	probelm := problems.FindConcurrentChar("helLo")
 	fmt.Println(string(probelm))
 }

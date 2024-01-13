@@ -17,6 +17,7 @@ func ReverseString(s string) string {
 
 // given a string, find if there are same two characters in a row
 func FindConcurrentChar(s string) []byte {
+	s = strings.ToLower(s)
 	charCount := make(map[byte]int)
 	var repeatingChars []byte
 
