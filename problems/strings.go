@@ -14,3 +14,21 @@ func ReverseString(s string) string {
 	reverseRest := ReverseString(s[:len(s)-1])
 	return lastCharacter + reverseRest
 }
+
+// given a string, find if there are same two characters in a row
+func FindConcurrentChar(s string) []byte {
+	charCount := make(map[byte]int)
+	var repeatingChars []byte
+
+	for i := 0; i < len(s); i++ {
+		char := s[i]
+		charCount[char]++
+	}
+
+	for char, count := range charCount {
+		if count > 1 {
+			repeatingChars = append(repeatingChars, char)
+		}
+	}
+	return repeatingChars
+}
