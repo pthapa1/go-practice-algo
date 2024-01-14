@@ -22,3 +22,34 @@ func TestReverseString(t *testing.T) {
 		}
 	}
 }
+
+func TestFindConcurrentChar(t *testing.T) {
+	type testCase struct {
+		testString string
+		expected   problems.CharProtocol
+	}
+	testCases := []testCase{
+		{
+			testString: "helLo",
+			expected: problems.CharProtocol{
+				Character:     "l",
+				StartingIndex: 2,
+				Count:         2,
+			},
+		},
+	}
+
+	for _, tc := range testCases {
+		result := problems.FindConcurrentChar(tc.testString)
+		if result.Character != tc.expected.Character ||
+			result.StartingIndex != tc.expected.StartingIndex ||
+			result.Count != tc.expected.Count {
+			t.Errorf(
+				"Test for concurrent char failed for string %v. Expected %v Got %v",
+				tc.testString,
+				tc.expected,
+				result,
+			)
+		}
+	}
+}
