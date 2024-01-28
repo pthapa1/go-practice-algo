@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	probelm := problems.FindConcurrentChar("helLoleHheeeeee lllllllllll")
-	fmt.Println(probelm)
+	toprint := problems.FizzBuzz(-1)
+	fmt.Println(toprint)
 }
