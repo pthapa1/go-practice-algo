@@ -30,11 +30,9 @@ When that happens, we need to find ways to store the data without replacing what
 
   - Instead of putting the item in the array, each index points to the head of a linked list
 
-    0  1   2  3  4  5  6  7 -- index
-
-|  |  |  |  |  |  |  |  | <- array (associative) each slot is bucket that points to head of the linked list
-
-	⬇  ⬇  ⬇  ⬇  ⬇  ⬇  ⬇  ⬇   <- each bucker points to linked list (bucker nodes)
+    0  1  2  3  4  5  6  7  <- index
+  |  |  |  |  |  |  |  |  | <- array (associative) each slot is bucket that points to head of the linked list
+	 ⬇  ⬇  ⬇  ⬇  ⬇  ⬇  ⬇  ⬇   <- each bucker points to linked list (bucker nodes)
 	___
 	___   <- bucket nodes
 
@@ -70,8 +68,32 @@ type bucket struct {
 
 // bucketNode is a linked list, so we need to define the individual node structure as well
 type bucketNode struct {
-	key  string
 	next *bucketNode
+	key  string
+}
+
+// Initialize a bucket: In each slot of the HashTable array add a bucket structure
+func Init() *HashTable {
+	result := &HashTable{}
+	for i := range result.array {
+		result.array[i] = &bucket{}
+	}
+	return result
+}
+
+// hash: takes key, string, and array size, int, and returns a unique (index) for the key
+func Hash(key string, arraySize int) int {
+	sum := 0
+
+	for _, v := range key {
+		sum += int(v)
+	}
+	return sum % arraySize
+}
+
+func (h *HashTable) Insert(key string, arraySize int) {
+	// idx := Hash(key, arraySize)
+	// h.array[idx].
 }
 
 // insert
