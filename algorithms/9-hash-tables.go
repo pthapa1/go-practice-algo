@@ -52,45 +52,6 @@ Search:
 - Go to the given index to search for the item
 */
 // --- Separate chaining ---
-
-// ArraySize is the size of the hash table array
-const ArraySize = 10 // nice number
-
-// hash table structure
-type HashTable[T int | string] struct {
-	array [ArraySize]*bucket[T] // array of size ArraySize and type bucket
-}
-
-type HashLinkedListNode[T int | string] struct {
-	Data T
-	Next *Node[T]
-}
-
-type HashLinkedList[T int | string] struct {
-	head   *Node[T]
-	length int
-}
-
-// bucket structure
-type bucket[T int | string] struct {
-	head *HashLinkedListNode[T]
-}
-
-// bucketNode is a linked list, so we need to define the individual node structure as well
-type bucketNode struct {
-	next *bucketNode
-	key  string
-}
-
-// Initialize a bucket: In each slot of the HashTable array add a bucket structure
-// func Init() *HashTable {
-// 	result := &HashTable{}
-// 	for i := range result.array {
-// 		result.array[i] = &bucket{}
-// 	}
-// 	return result
-// }
-
 // hash function: takes key, of string, and an array size, an int. And returns a unique (index) for the key
 func Hash(key string, arraySize int) int {
 	sum := 0
@@ -100,6 +61,51 @@ func Hash(key string, arraySize int) int {
 	}
 	return sum % arraySize
 }
+
+type HashTable[T int | string] struct {
+	array []*HashNode[T] // array of size ArraySize and type bucket
+}
+
+type HashNode[T int | string] struct {
+	Data T
+	Next *Node[T]
+}
+
+type HashLinkedList[T int | string] struct {
+	Head   *HashNode[T]
+	Length int
+}
+
+func Init[T int | string](arraySize int) *HashTable[T] {
+	result := &HashTable[T]{
+		array: make([]*HashNode[T], arraySize),
+	}
+	for i := range result.array {
+		result.array[i] = &HashNode[T]{}
+	}
+	return result
+}
+
+//
+// // bucket structure
+// type bucket[T int | string] struct {
+// 	head *HashLinkedListNode[T]
+// }
+//
+// // bucketNode is a linked list, so we need to define the individual node structure as well
+// type bucketNode struct {
+// 	next *bucketNode
+// 	key  string
+// }
+
+// Initialize a bucket: In each slot of the HashTable array add a bucket structure
+// func Init() *HashTable {
+// 	result := &HashTable{}
+// 	for i := range result.array {
+// 		result.array[i] = &bucket{}
+// 	}
+// 	return result
+// }
 
 // insert
 // search

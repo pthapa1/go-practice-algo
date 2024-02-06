@@ -7,7 +7,8 @@ import (
 )
 
 func main() {
-	testHashTable := algo.Init()
+	// testHashTable := algo.Init(10)
+	testHashTable := algo.Init[int](10)
 	fmt.Println(testHashTable)
 	fmt.Println("Index: ", algo.Hash("Brady", 10))
 }
