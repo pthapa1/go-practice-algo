@@ -57,13 +57,23 @@ Search:
 const ArraySize = 10 // nice number
 
 // hash table structure
-type HashTable struct {
-	array [ArraySize]*bucket // array of size ArraySize and type bucket
+type HashTable[T int | string] struct {
+	array [ArraySize]*bucket[T] // array of size ArraySize and type bucket
+}
+
+type HashLinkedListNode[T int | string] struct {
+	Data T
+	Next *Node[T]
+}
+
+type HashLinkedList[T int | string] struct {
+	head   *Node[T]
+	length int
 }
 
 // bucket structure
-type bucket struct {
-	head *bucketNode
+type bucket[T int | string] struct {
+	head *HashLinkedListNode[T]
 }
 
 // bucketNode is a linked list, so we need to define the individual node structure as well
@@ -73,15 +83,15 @@ type bucketNode struct {
 }
 
 // Initialize a bucket: In each slot of the HashTable array add a bucket structure
-func Init() *HashTable {
-	result := &HashTable{}
-	for i := range result.array {
-		result.array[i] = &bucket{}
-	}
-	return result
-}
+// func Init() *HashTable {
+// 	result := &HashTable{}
+// 	for i := range result.array {
+// 		result.array[i] = &bucket{}
+// 	}
+// 	return result
+// }
 
-// hash: takes key, string, and array size, int, and returns a unique (index) for the key
+// hash function: takes key, of string, and an array size, an int. And returns a unique (index) for the key
 func Hash(key string, arraySize int) int {
 	sum := 0
 
@@ -89,11 +99,6 @@ func Hash(key string, arraySize int) int {
 		sum += int(v)
 	}
 	return sum % arraySize
-}
-
-func (h *HashTable) Insert(key string, arraySize int) {
-	// idx := Hash(key, arraySize)
-	// h.array[idx].
 }
 
 // insert
