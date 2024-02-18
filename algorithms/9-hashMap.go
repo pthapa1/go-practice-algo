@@ -181,8 +181,6 @@ func (h *HashTable[T]) HashMapDelete(key T) bool {
 		lastNode = currentNode
 		currentNode = currentNode.Next
 	}
-
-	// If the key was not present in linked list
 	return false
 }
 
