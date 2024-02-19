@@ -155,7 +155,6 @@ func (h *HashTable[T]) HashMapSearch(key T) bool {
 }
 
 // delete node from hashmap given a key
-
 func (h *HashTable[T]) HashMapDelete(key T) bool {
 	idx := Hash[T](key, len(h.array))
 	currentNode := h.array[idx]
@@ -185,7 +184,7 @@ func (h *HashTable[T]) HashMapDelete(key T) bool {
 }
 
 /*
-// we can also create a distinct linked list at each array's space.
+// we can also create a distinct linked list structure at each array's space.
 // in that case, we need to make the following changes
 type HashLinkedList[T int | string] struct {
 	Head   *HashNode[T]
