@@ -22,31 +22,31 @@ Constraints:
 2 <= candidates[i] <= 40
 All elements of candidates are distinct.
 1 <= target <= 40
-
-	function combinationSum(candidates: number[], target: number): number[][] {
-	    const output: number[][] = []
-		function backtrack(start, target, combination: number[] = []){
-			// base case
-			if(target <= 0){
-				if(target === 0) output.push([...combination])
-				return
-			}
-			for(let i=start;i<candidates.length;i++){
-				const value = candidates[i]
-				combination.push(value)
-				backtrack(i, target - value, combination)
-				combination.pop();
-			}
-		}
-		backtrack(0, target,[])
-		return output
-	};
-
-// Also, solve how you would do it if you can't repeat the same number twice
-// this is how you pop the item from an array in go
-
-	func RemoveIndex(s []int, index int) []int {
-	    return append(s[:index], s[index+1:]...)
-	}
 */
 package problems
+
+func ComboSum(choices []int, target int) [][]int {
+	var output [][]int
+	var backtrack func(start int, target int, aCombo []int)
+	backtrack = func(start int, target int, aCombination []int) {
+		if target <= 0 {
+			if target == 0 {
+				aCopy := append([]int{}, aCombination...)
+				output = append(output, aCopy)
+			}
+			return
+		}
+		for i := start; i < len(choices); i++ {
+			choice := choices[i]
+			aCombination = append(aCombination, choice)
+			backtrack(i, target-choice, aCombination)
+			// pop the last item, weather its done or it's -ve
+			// we need to pop the item of existing slice.
+			// Don't create a new slice
+			aCombination = aCombination[:len(aCombination)-1]
+		}
+	}
+	aCombination := []int{}
+	backtrack(0, target, aCombination)
+	return output
+}
