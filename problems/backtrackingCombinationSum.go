@@ -41,12 +41,14 @@ func ComboSum(choices []int, target int) [][]int {
 			aCombination = append(aCombination, choice)
 			backtrack(i, target-choice, aCombination)
 			// pop the last item, weather its done or it's -ve
-			// we need to pop the item of existing slice.
-			// Don't create a new slice
+			// we need to pop the item of existing slice, (aCombination) without creating a new one
 			aCombination = aCombination[:len(aCombination)-1]
 		}
 	}
 	aCombination := []int{}
 	backtrack(0, target, aCombination)
+	if output == nil {
+		return [][]int{}
+	}
 	return output
 }

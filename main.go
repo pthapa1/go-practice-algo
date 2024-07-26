@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	input := []int{2, 3, 5, 7}
-	output := problems.ComboSum(input, 7)
+	input := []int{2, 1}
+	output := problems.ComboSum(input, 3)
 	fmt.Println("Combosum", output)
 }
