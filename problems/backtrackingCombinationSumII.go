@@ -30,3 +30,37 @@ Constraints:
 1 <= target <= 30
 */
 package problems
+
+import "slices"
+
+func ComboSum2(candidates []int, target int) [][]int {
+	var output [][]int
+	var backtrack func(start int, target int, combination []int)
+	backtrack = func(start int, target int, combination []int) {
+		slices.Sort(candidates)
+		if target < 0 {
+			return
+		}
+		if target == 0 {
+			aCopy := append([]int{}, combination...)
+			output = append(output, aCopy)
+		}
+		for i := start; i < len(candidates); i++ {
+			if i > start && candidates[i] == candidates[i-1] {
+				continue
+			}
+			if candidates[i] > target {
+				break
+			}
+			combination = append(combination, candidates[i])
+			backtrack(i+1, target-candidates[i], combination)
+			combination = combination[:len(combination)-1]
+		}
+	}
+	var combo []int
+	backtrack(0, target, combo)
+	if output == nil {
+		return [][]int{}
+	}
+	return output
+}
