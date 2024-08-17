@@ -1,15 +1,18 @@
 package main
 
-import (
-	"fmt"
+import "fmt"
 
-	"github.com/pthapa1/go-practice-algo/problems"
-)
+func mapHasItem(obj map[string]bool, item string) bool {
+	return obj[item]
+}
 
 func main() {
-	input := []int{3, 1, 3, 5, 1, 1}
-	output := problems.ComboSum2(input, 8)
-	fmt.Println("Output1", output)
-	emptyArr := []int{}
-	fmt.Println("This -> ", emptyArr)
+	input := make(map[string]bool)
+	input["1"] = true
+	result := mapHasItem(input, "2")
+	fmt.Println(result)
+	i, v := input["1"]
+	fmt.Println("This is true, first value: ", i)
+
+	fmt.Println("This is false, second value: ", v)
 }
