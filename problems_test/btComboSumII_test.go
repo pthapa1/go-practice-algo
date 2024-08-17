@@ -10,8 +10,8 @@ import (
 func TestComboSum2(t *testing.T) {
 	tests := []struct {
 		candidates []int
-		target     int
 		expected   [][]int
+		target     int
 	}{
 		{
 			candidates: []int{10, 1, 2, 7, 6, 1, 5},
