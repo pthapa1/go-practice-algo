@@ -1,6 +1,9 @@
 package problems
 
 func recurse(arr []int, target int, pL int, pR int) bool {
+	if len(arr) == 0 {
+		return false
+	}
 	middleIndex := (pL + pR) / 2
 	middleNumber := arr[middleIndex]
 	if pL > pR {
@@ -18,12 +21,7 @@ func recurse(arr []int, target int, pL int, pR int) bool {
 
 // Given a sorted array, return true if target exists. Make sure it's the O(log n)
 func RecursiveBinarySearch(arr []int, target int) bool {
-	pL := 0
-	pR := len(arr) - 1
-	if len(arr) == 0 {
-		return false
-	}
-	return recurse(arr, target, pL, pR)
+	return recurse(arr, target, 0, len(arr)-1)
 }
 
 func LoopBinarySearch(arr []int, target int) bool {
