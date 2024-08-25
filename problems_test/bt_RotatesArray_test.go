@@ -27,6 +27,7 @@ func TestBsRotatedArray(t *testing.T) {
 		{arr: []int{1, 2, 3, 4, 5, 6, 7}, expected: 1},
 		{arr: []int{2, 3, 4, 5, 6, 7, 1}, expected: 1},
 		{arr: append([]int{2, 3, 4, 5, 6, 7}, 1), expected: 1},
+		{arr: append(make([]int, 999999, 1000000), 1), expected: 1},
 		{arr: []int{30, 40, 50, 10, 20}, expected: 10},
 		{arr: []int{2, 2, 2, 2, 2, 2, 2}, expected: 2},
 	}
@@ -36,7 +37,7 @@ func TestBsRotatedArray(t *testing.T) {
 		t.Run("", func(t *testing.T) {
 			result := problems.RotatedArrayBinarySearchWithRecursion(test.arr)
 			if result != test.expected {
-				t.Errorf("Expected %d, but got %d, for %v", test.expected, result, test.arr)
+				t.Errorf("Expected %d, but got %d", test.expected, result)
 			}
 		})
 	}
