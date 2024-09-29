@@ -12,6 +12,7 @@ func JumpGameII(nums []int) int {
 			return 0
 		}
 		coverageWindow = int(math.Max(float64(coverageWindow), float64(nums[i]+i)))
+		// If you are at a point, that you have explored all the options, and your current index == lastOneYouCould jump to
 		if i == lastJumpIndex {
 			totalJumps++
 			lastJumpIndex = coverageWindow
