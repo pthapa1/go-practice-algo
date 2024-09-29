@@ -2,6 +2,7 @@ package problems
 
 import "math"
 
+// https://leetcode.com/problems/jump-game-ii/description/
 func JumpGameII(nums []int) int {
 	totalJumps := 0
 	destination := len(nums) - 1
@@ -25,20 +26,23 @@ func JumpGameII(nums []int) int {
 	return totalJumps
 }
 
-/*
-function jump(nums: number[]): number {
-  let jumpCount = 0;
-  let currentEnd = 0;
-  let farthest = 0;
-  const lastIndex = nums.length - 1;
-  for (let i = 0; i < lastIndex; i++) {
-    farthest = Math.max(farthest, i + nums[i]);
-    if (i === currentEnd) {
-      jumpCount++;
-      currentEnd = farthest;
-      if (currentEnd >= lastIndex) break;
-    }
-  }
-  return jumpCount;
+// https://leetcode.com/problems/jump-game/description/
+func JumpGame(nums []int) bool {
+	if len(nums) == 1 {
+		return true // already at the last index
+	}
+	farthestPoint := 0
+	coverageWindow := 0
+	for i := 0; i < len(nums); i++ {
+		// update the coverageWindow to whatever is the maximum, current range or the new one we are on
+		coverageWindow = int(math.Max(float64(coverageWindow), float64(i+nums[i])))
+		// if we are at the max point for the window above, explore more options
+		if i == farthestPoint {
+			farthestPoint = coverageWindow
+			if coverageWindow >= len(nums)-1 {
+				return true
+			}
+		}
+	}
+	return false
 }
-*/
